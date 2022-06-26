@@ -1,0 +1,15 @@
+li > a.link,
+.form-group > * {
+    border-radius: 1rem !important;
+}
+
+.form-data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.form-data > span:last-child {
+    font-weight: bold;
+}
