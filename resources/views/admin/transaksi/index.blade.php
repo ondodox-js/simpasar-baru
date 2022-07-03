@@ -10,24 +10,27 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Judul</th>
-                  <th>Link</th>
-                  <th>Deskripsi</th>
+                  <th>Kode pembayaran</th>
+                  <th>Nama penyewa</th>
+                  <th>Nomor lapak</th>
+                  <th>Jumlah bayar</th>
+                  <th>Tanggal pemesanan</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($pemesanans as $pemesanan)
+                  @php
+                    $label_class = $pemesanan->status ? 'label-success' : 'label-danger'    
+                  @endphp
                   <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $pemesanan->kode_pembayaran }}</td>
+                    <td>{{ $pemesanan->nama_lengkap }}</td>
+                    <td>{{ $pemesanan->posisi }}</td>
                     <td>{{ $pemesanan->jumlah_bayar }}</td>
                     <td>{{ date($pemesanan->tanggal_transaksi) }}</td>
-                    <td>
-                      @if (!$pemesanan->status)
-                        <span class="label label-danger pull-right">pending</span>
-                      @else
-                        <span class="label label-success pull-right">success</span>             
-                      @endif
+                    <td class="text-center">
+                        <span class="label {{ $label_class }} pull-right">{{ $pemesanan->keterangan }}</span>
                     </td>
                   </tr>
                 @endforeach

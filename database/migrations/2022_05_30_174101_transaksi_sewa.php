@@ -17,7 +17,9 @@ class TransaksiSewa extends Migration
             $table->string('kode_pembayaran')->primary();
             $table->foreignId('id_sewa')->constrained('sewas', 'id_sewa');
             $table->double('jumlah_bayar');
+            $table->text('token');
             $table->boolean('status')->default(false);
+            $table->text('keterangan')->default('menunggu pembayaran');
             $table->timestamp('tanggal_transaksi');
         });
     }

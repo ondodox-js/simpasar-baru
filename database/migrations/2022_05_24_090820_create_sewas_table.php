@@ -18,10 +18,11 @@ class CreateSewasTable extends Migration
             $table->double('harga_awal');
             $table->double('kenaikan_harga')->default(0);
             $table->integer('periode');
+            $table->boolean('status')->default(false);
             $table->foreignId('id_pedagang')->constrained('pedagangs', 'id_pedagang');
             $table->foreignId('id_lapak')->constrained('lapaks', 'id_lapak');
-            $table->timestamp('tanggal_update_sewa');
             $table->timestamp('tanggal_sewa');
+            
         });
     }
 

@@ -284,7 +284,7 @@
             </ul>
           </li>
           <li class="sub-menu">
-            <a href="javascript:;" class="{{ request()->is('admin/transaksi/*') ? 'active' : '' }} link">
+            <a href="javascript:;" class="{{ request()->is('admin/transaksi/*') || request()->is('admin/transaksi') ? 'active' : '' }} link">
               <i class="fa fa-money"></i>
               <span>Data transaksi</span>
               </a>

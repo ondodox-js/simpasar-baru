@@ -25,10 +25,12 @@
                       <td>{{ $sewa->posisi }}</td>
                       <td>{{ $sewa->nama_lengkap }}</td>
                       <td>{{ $sewa->tanggal_sewa }}</td>
-                      <td>
-                        <button class="btn btn-success btn-xs"><i class="fa fa-eye"></i></button>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                      <td class="text-center">
+                        @if (!$sewa->status)
+                          <span class="label label-danger pull-right">belum melakukan pembayaran</span>
+                        @else
+                          <span class="label label-success pull-right">disewakan</span>             
+                        @endif
                       </td>
                     </tr>
                   </form>

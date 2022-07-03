@@ -19,7 +19,6 @@ class CreateProduksTable extends Migration
             $table->double('harga_lama')->default(0);
             $table->double('harga_terbaru');
             $table->string('url_gambar');
-            $table->timestamps();
         });
     }
 

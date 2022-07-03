@@ -18,7 +18,7 @@ class PedagangController extends Controller
      */
     public function index()
     {
-        $pedagangs = Pedagang::all()->sortBy('nama_lengkap');
+        $pedagangs = Pedagang::pedagangAktif();
         $data = [
             'pedagangs' => $pedagangs
         ];

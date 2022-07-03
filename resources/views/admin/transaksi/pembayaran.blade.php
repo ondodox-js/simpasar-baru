@@ -20,10 +20,10 @@
     <h3><i class="fa fa-angle-right"></i> Pembayaran</h3>
     <div class="row">
         <div class="col-md-9">
-            <h4>{{ $nama_lengkap }}</h4>
+            <h4>{{ $pedagang->nama_lengkap }}</h4>
             <address>
-            <strong>{{ $email }}</strong><br>
-            <abbr title="Phone">Hp:</abbr> {{ $no_hp }}
+            <strong>{{ $pedagang->email }}</strong><br>
+            <abbr title="Phone">Hp:</abbr> {{ $pedagang->no_hp }}
             </address>
         </div>
         <!-- /col-md-9 -->
@@ -55,12 +55,12 @@
         </thead>
         <tbody>
             @php
-                $total = $periode_sewa * $harga_sewa;
+                $total = $periode * $lapak->harga_sewa;
             @endphp
             <tr>
-                <td class="text-center">{{ $periode_sewa }} bulan</td>
-                <td>Penyewaan lapak dengan kode {{ $posisi_lapak }} dan ukuran luas dari lapak ini adalah {{ $luas_lapak }}. </td>
-                <td class="text-right">Rp {{ $harga_sewa }} / bulan</td>
+                <td class="text-center">{{ $periode }} bulan</td>
+                <td>Penyewaan lapak dengan kode {{ $lapak->posisi }} dan ukuran luas dari lapak ini adalah {{ $lapak->luas }}. </td>
+                <td class="text-right">Rp {{ $lapak->harga_sewa }} / bulan</td>
                 <td class="text-right">Rp {{ $total }}</td>
             </tr>
             <tr>

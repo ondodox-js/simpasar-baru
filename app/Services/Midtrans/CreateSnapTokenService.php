@@ -49,28 +49,36 @@ class CreateSnapTokenService extends Midtrans
     public function getSnapTokenPenyewaan()
     {
         $id_transaksi = 'ondodox-id-' . time();
+        $lapak = $this->order->lapak;
+        $pedagang = $this->order->pedagang;
+        $periode = $this->order->periode;
+
         $params = [
             'transaction_details' => [
                 'order_id' => $id_transaksi,
-                'gross_amount' => $this->order['harga_sewa'] + $this->order['periode_sewa'],
+                'gross_amount' => $lapak->harga_sewa * $periode,
             ],
             'item_details' => [
                 [
-                    'id' => $this->order['id_lapak'],
-                    'price' => $this->order['harga_sewa'],
-                    'quantity' => $this->order['periode_sewa'],
-                    'name' => 'Lapak posisi ' . $this->order['posisi_lapak']
+                    'id' => $lapak->id_lapak,
+                    'price' => $lapak->harga_sewa,
+                    'quantity' => $periode,
+                    'name' => 'Lapak posisi ' . $lapak->posisi
                 ]
             ],
             'customer_details' => [
-                'first_name' => $this->order['nama_lengkap'],
-                'email' => $this->order['email'],
-                'phone' => $this->order['no_hp'],
+                'first_name' => $pedagang->namaLengkap,
+                'email' => $pedagang->email,
+                'phone' => $pedagang->noHp,
             ]
         ];
  
-        $snapToken = Snap::getSnapToken($params);
+        $snap_token = Snap::getSnapToken($params);
+
+        
+        $this->order->snap_token = $snap_token;
+        $this->order->kode_pembayaran = $id_transaksi;
  
-        return ['snap_token' => $snapToken, 'kode_pembayaran' => $id_transaksi];
+        return $this->order;
     }
 }

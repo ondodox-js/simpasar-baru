@@ -19,7 +19,6 @@ class SewaController extends Controller
         $data = [
             'sewas' => $sewas
         ];
-
         return view('admin.sewa.index', $data);
     }
 

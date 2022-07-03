@@ -39,7 +39,7 @@
 		</a>
 		<nav class="header-nav">
 			<ul class="main-menu">
-			<li><a href="{{ route('home') }}" class="{{ Route::is('home') ? 'active' : '' }}">Home</a></li>
+			<li><a href="{{ route('home') }}" class="{{ Route::is('home') ? 'active' : '' }}">Beranda</a></li>
 				<li><a href="{{ route('tentang') }}" class="{{ Route::is('tentang') ? 'active' : '' }}">Tentang</a></li>
 				<li><a href="{{ route('denah') }}" class="{{ Route::is('denah') ? 'active' : '' }}">Denah</a>
 					<!-- <ul class="sub-menu">
@@ -49,7 +49,7 @@
 					</ul> -->
 				</li>
 				<li><a href="{{ route('dagangan') }}" class="{{Route::is('dagangan') ? 'active' : '' }}">Harga Barang Komoditas</a></li>
-				<li><a href="{{ route('masuk') }}">Login</a></li>
+				<li><a href="{{ route('masuk') }}">Masuk</a></li>
 			</ul>
 			<div class="header-right">
 				<a href="#" class="hr-btn"><i class="flaticon-029-telephone-1"></i>Call us now! </a>

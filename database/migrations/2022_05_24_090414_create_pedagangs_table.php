@@ -20,7 +20,6 @@ class CreatePedagangsTable extends Migration
             $table->string('no_hp', 13);
             $table->string('email', 32);
             $table->string('alamat');
-            $table->timestamps();
         });
     }
 

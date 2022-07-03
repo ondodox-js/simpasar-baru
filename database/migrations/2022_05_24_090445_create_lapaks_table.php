@@ -19,7 +19,6 @@ class CreateLapaksTable extends Migration
             $table->string('luas');
             $table->double('harga_sewa');
             $table->boolean('status')->default(true);
-            $table->timestamps();
         });
     }
 

@@ -5,49 +5,42 @@ namespace App\Http\Controllers;
 use App\Lapak;
 use App\Pedagang;
 use App\Services\Midtrans\CreateSnapTokenService;
+use App\Services\Midtrans\TransactionService;
 use App\Sewa;
 use App\Transaksi;
+use App\TransaksiSewa;
 use Illuminate\Http\Request;
+use stdClass;
 
 class TransaksiController extends Controller
 {
     public function index(){
-
-        $pemesanans = Transaksi::pemesanan();
+        request()->flush();
 
         $data = [
-            'pemesanans' => $pemesanans
+            'pemesanans' => TransaksiSewa::dataPemesanan()
         ];
+
         return view('admin.transaksi.index', $data);
     }
 
     public function showPembayaran(Request $request){
         $data_trs = $request->session()->get('data_transaksi');
-        $lapak = Lapak::find($data_trs['idLapak']);
-        $periode_sewa = $data_trs['periode'];
 
-        $data = [
-            'periode_sewa' => $periode_sewa,
-            'id_lapak' => $lapak->id_lapak,
-            'harga_sewa' => $lapak->harga_sewa,
-            'posisi_lapak' => $lapak->posisi,
-            'luas_lapak' => $lapak->luas,
-            'nama_lengkap' => $data_trs['namaLengkap'],
-            'email' => $data_trs['email'],
-            'no_hp' => $data_trs['noHp'],
-            'alamat' => $data_trs['alamat'],
-            'nik' => $data_trs['nik']
-        ];
+        $pemesanan = new stdClass();
+        $pemesanan->pedagang = Pedagang::pedagangObject($data_trs);
+        $pemesanan->lapak = Lapak::find($data_trs['idLapak']);
+        $pemesanan->periode = $data_trs['periode'];
 
-        $transaksi = new CreateSnapTokenService($data);
+        $transaksi = new CreateSnapTokenService($pemesanan);
+        
+        $data = $transaksi->getSnapTokenPenyewaan();
 
-        $snap_data = $transaksi->getSnapTokenPenyewaan();
-        $data['snap_token'] = $snap_data['snap_token'];
-        $data['kode_pembayaran'] = $snap_data['kode_pembayaran'];
+        $sewa = Sewa::simpanDataPenyewaan($data->pedagang, $data->lapak, $data->periode);
 
-        Transaksi::savePenyewaan($data);
+        TransaksiSewa::simpanDataTransaksi($sewa, $data);
 
-        return view('admin.transaksi.pembayaran',$data);
+        return view('admin.transaksi.pembayaran',(array) $data);
     }
 
     public function store(Request $request){

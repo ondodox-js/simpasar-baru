@@ -18,7 +18,6 @@ class CreateRetribusisTable extends Migration
             $table->string('layanan');
             $table->double('biaya_awal');
             $table->double('kenaikan_biaya')->default(0);
-            $table->timestamps();
         });
     }
 

@@ -18,7 +18,8 @@ class TransaksiRetribusi extends Migration
             $table->foreignId('id_sewa')->constrained('sewas', 'id_sewa');
             $table->double('jumlah_bayar');
             $table->boolean('status')->default(false);
-            $table->timestamps();
+            $table->text('token');
+            $table->timestamp('tanggal_transaksi');
         });
     }
 
