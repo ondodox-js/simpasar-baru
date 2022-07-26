@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Midtrans\Config;
-use Midtrans\Snap;
 
 class ProdukController extends Controller
 {

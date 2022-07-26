@@ -14,11 +14,10 @@ class TransaksiRetribusi extends Migration
     public function up()
     {
         Schema::create('transaksi_retribusi', function (Blueprint $table){
-            $table->string('kode_pembayaran')->primary();
+            $table->id('id_transaksi');
             $table->foreignId('id_sewa')->constrained('sewas', 'id_sewa');
             $table->double('jumlah_bayar');
-            $table->boolean('status')->default(false);
-            $table->text('token');
+            $table->text('keterangan');
             $table->timestamp('tanggal_transaksi');
         });
     }

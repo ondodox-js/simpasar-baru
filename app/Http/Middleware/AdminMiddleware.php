@@ -17,10 +17,10 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if(!Admin::cekLogin()){
-            return redirect()->route('masuk');
+            return redirect()->route('u-admin');
         }else{
             $route_name = $request->route()->getName();
-            if($route_name === 'masuk'){
+            if($route_name === 'u-admin'){
                 return redirect()->route('admin.index');
             }
             return $next($request);

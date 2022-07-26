@@ -35,7 +35,7 @@
       *********************************************************************************************************************************************************** -->
   <div id="login-page">
     <div class="container">
-      <form class="form-login" action="{{ route('authenticate') }}" method="POST">
+      <form class="form-login" action="{{ route('auth-admin') }}" method="POST">
         @csrf
         <h2 class="form-login-heading">sign in now</h2>
         <div class="login-wrap @error('namaPengguna') has-error @enderror">

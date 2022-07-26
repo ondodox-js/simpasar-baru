@@ -18,19 +18,39 @@ class Sewa extends Model
         ->get(['pedagangs.*', 'lapaks.posisi', 'sewas.*']);
     }
 
-    public static function simpanDataPenyewaan(Pedagang $pedagang,Lapak $lapak, $periode){
+    public static function simpanDataPenyewaan(Pedagang $pedagang,Lapak $lapak, Sewa $sewa){
         $pedagang->save();
         $lapak->status = false;
         $lapak->save();
 
-        $sewa_baru = new Sewa();
-        $sewa_baru->harga_awal = $lapak->harga_sewa;
-        $sewa_baru->periode = $periode;
-        $sewa_baru->id_pedagang = $pedagang->id_pedagang;
-        $sewa_baru->id_lapak = $lapak->id_lapak;
+        $sewa->harga_awal = $lapak->harga_sewa;
+        $sewa->id_pedagang = $pedagang->id_pedagang;
+        $sewa->id_lapak = $lapak->id_lapak;
 
-        $sewa_baru->save();
-        
-        return $sewa_baru;
+        $sewa->save();
+    }
+
+    public static function getLapak(Pedagang $pedagang){
+        $lapaks = Sewa::join('lapaks', 'sewas.id_lapak', '=', 'lapaks.id_lapak')->where('id_pedagang', '=', $pedagang->id_pedagang)->get(['sewas.*', 'lapaks.posisi', 'lapaks.luas']);
+
+        return $lapaks;
+    }
+
+    public static function joinLapak(){
+        return Sewa::join('lapaks', 'sewas.id_lapak', '=', 'lapaks.id_lapak')->get();
+    }
+
+    public function bayarSewa($request){
+        $lapak = Lapak::find($this->id_lapak);
+
+        $transaksi = new TransaksiSewa();
+        $transaksi->id_sewa = $this->id_sewa;
+        $transaksi->jumlah_bayar = $lapak->biayaSewa($request->jumlahPeriode);
+        if($request->keterangan){
+            $transaksi->keterangan = $request->keterangan;
+        }
+        $transaksi->periode_bayar = $request->jumlahPeriode;
+
+        return $transaksi;
     }
 }

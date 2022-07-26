@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\TransaksiRetribusiController;
+use App\Http\Controllers\TransaksiSewaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,7 +75,11 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function(){
     Route::prefix('pedagang')->name('pedagang.')->group(function(){
         Route::get('/', 'PedagangController@index')->name('index');
         Route::get('/tambah', 'PedagangController@create')->name('tambah');
+        Route::post('/tambah', 'PedagangController@afterCreate')->name('after-create');
         Route::post('/', 'PedagangController@store')->name('store');
+        Route::get('/{id}', 'PedagangController@show')->name('show');
+        Route::get('/{id}/edit', 'PedagangController@edit')->name('edit');
+        Route::put('/{id}', 'PedagangController@update')->name('update');
         Route::delete('/{id}', 'PedagangController@destroy')->name('destroy');
     });
 
@@ -82,6 +87,8 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function(){
         Route::get('/', 'LapakController@index')->name('index');
         Route::get('/tambah', 'LapakController@create')->name('tambah');
         Route::post('/', 'LapakController@store')->name('store');
+        Route::get('/{id}/edit', 'LapakController@edit')->name('edit');
+        Route::put('/{id}', 'LapakController@update')->name('update');
         Route::delete('/{id}', 'LapakController@destroy')->name('destroy');
     });
 
@@ -108,11 +115,35 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function(){
     Route::prefix('transaksi')->name('transaksi.')->group(function(){
         Route::get('/', 'TransaksiController@index')->name('index');
         Route::get('/pembayaran', 'TransaksiController@showPembayaran')->name('pembayaran');
+        Route::get('/berhasil', 'TransaksiController@pembayaranManualDanSimpanAkun')->name('penyewaan-awal');
         Route::get('/sewa', 'TransaksiController@sewaIndex')->name('sewa');
         Route::get('/retribusi', 'TransaksiController@retribusiIndex')->name('retribusi');
     });
+
+    Route::post('transaksi-retribusi/after-create', 'TransaksiRetribusiController@afterCreate')->name('transaksi-retribusi.after-create');
+    Route::resource('transaksi-retribusi', 'TransaksiRetribusiController');
+    Route::post('transaksi-sewa/after-create', 'TransaksiSewaController@afterCreate')->name('transaksi-sewa.after-create');
+    Route::resource('transaksi-sewa', 'TransaksiSewaController');
 });
 
-Route::get('/masuk', 'LoginController@index')->name('masuk');
-Route::post('/masuk', 'LoginController@authenticate')->name('authenticate');
+//new-route-pedagang
+Route::prefix('pedagang')->name('pedagang.')->middleware('pedagang')->group(function(){
+    Route::get('/', 'PedagangController@pedagangDashboard')->name('index');
+
+    Route::get('/lapak', 'PedagangController@pedagangLapak')->name('lapak');
+    Route::get('/pembayaran', 'PedagangController@pedagangPembayaran')->name('pembayaran');
+    Route::prefix('transaksi')->name('transaksi.')->group(function(){
+        Route::get('/', 'PedagangController@pedagangTransaksi')->name('index');
+        Route::get('/sewa', 'PedagangController@pedagangSewa')->name('sewa');
+        Route::get('/retribusi', 'PedagangController@pedagangRetribusi')->name('retribusi');
+    });
+});
+
+Route::middleware('login')->group(function(){
+    Route::get('/u/admin', 'LoginController@index')->name('u-admin');
+    Route::post('/u/admin', 'LoginController@authenticate')->name('auth-admin');
+    
+    Route::get('/u/pedagang', 'LoginController@viewLoginPedagang')->name('u-pedagang');
+    Route::post('/u/pedagang', 'LoginController@authenticatePedagang')->name('auth-pedagang');
+});
 Route::post('/keluar', 'LoginController@logout')->name('logout');

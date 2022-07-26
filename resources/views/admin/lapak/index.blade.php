@@ -29,9 +29,8 @@
                       <td>{{ $lapak->luas }} cm</td>
                       <td>{{ $lapak->status ? 'Tersedia' : 'Disewakan' }}</td>
                       <td>
-                        <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                        <a href="{{ route('admin.lapak.edit', ['id' => $lapak->id_lapak]) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                        <button type="submit" onclick="return confirm('Yakin ingin menghapus {{ $lapak->posisi }} ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
                       </td>
                     </tr>
                   </form>

@@ -71,11 +71,11 @@ class DummySeed extends Seeder
         $retribusis = [
             [
                 'layanan' => 'Keamanan',
-                'biaya_awal' => 20000
+                'biaya' => 20000
             ],
             [
                 'layanan' => 'Kebersihan',
-                'biaya_awal' => 50000
+                'biaya' => 50000
             ]
         ];
 

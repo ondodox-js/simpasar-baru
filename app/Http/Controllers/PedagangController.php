@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Lapak;
 use App\Pedagang;
 use App\Sewa;
+use DateTime;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\DB;
 
 class PedagangController extends Controller
 {
@@ -26,13 +26,6 @@ class PedagangController extends Controller
         return view('admin.pedagang.index', $data);
     }
 
-    public function viewpedagang()
-    {
-        $user = DB::table('pedagang')->get();
-
-        return view('view-pedagang', compact('user'));
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -42,10 +35,43 @@ class PedagangController extends Controller
     {
         $lapaks = Lapak::lapakTersedia();
 
+        request()->session()->remove('data');
+
         $data = [
             'lapaks' => $lapaks
         ];
         return view('admin.pedagang.tambah', $data);
+    }
+
+    public function afterCreate(Request $request){
+
+        $request_validate = [
+            'nik' => 'required|digits:16|numeric',
+            'namaLengkap' => 'required|min:3',
+            'noHp' => 'required|min:9|numeric',
+            'alamat' => 'required|min:3',
+            'idLapak' => 'required',
+            'periode' => 'required|numeric'
+        ];
+
+        $request->validate($request_validate);
+
+        $pedagang = Pedagang::pedagangObject($request);
+        $lapak = Lapak::find($request->idLapak);
+        $sewa = new Sewa();
+        $sewa->id_lapak = $lapak->id_lapak;
+        $sewa->periode = $request->periode;
+
+        
+        $data = [
+            'pedagang' => $pedagang,
+            'lapak' => $lapak,
+            'sewa' => $sewa
+        ];
+        
+        $request->session()->push('data', $data);
+        
+        return view('admin.pedagang.pembayaran', $data);
     }
 
     /**
@@ -56,8 +82,10 @@ class PedagangController extends Controller
      */
     public function store(Request $request)
     { 
-        $request->session()->put('data_transaksi', $request->all());
-        return redirect()->route('admin.transaksi.pembayaran');
+        $data = $request->session()->get('data')[0];
+        Sewa::simpanDataPenyewaan($data['pedagang'], $data['lapak'], $data['sewa']);
+
+        return redirect()->route('admin.pedagang.index');
     }
 
     /**
@@ -68,7 +96,7 @@ class PedagangController extends Controller
      */
     public function show($id)
     {
-        //
+        dd(Pedagang::find($id));
     }
 
     /**
@@ -79,7 +107,10 @@ class PedagangController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = [
+            'pedagang' => Pedagang::find($id)
+        ];
+        return view('admin.pedagang.edit', $data);
     }
 
     /**
@@ -91,7 +122,19 @@ class PedagangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request_validate = [
+            'nik' => 'required|digits:16|numeric',
+            'namaLengkap' => 'required|min:3',
+            'noHp' => 'required|min:9|numeric',
+            'alamat' => 'required|min:3'
+        ];
+
+        $crudentials = $request->validate($request_validate);
+        
+        $pedagang = Pedagang::find($id);
+        $pedagang->updateData((object) $crudentials);
+
+        return redirect()->route('admin.pedagang.show', ['id' => $id]);
     }
 
     /**
@@ -106,5 +149,37 @@ class PedagangController extends Controller
 
         $pedagang->delete();
         return redirect()->route('admin.pedagang.index');
+    }
+
+    public function pedagangDashboard(){
+        return view('pedagang.index');
+    }
+    public function pedagangLapak(){
+        $lapaks = Sewa::getLapak(Pedagang::user());
+        $now = new DateTime();
+        $new_date = new DateTime($lapaks[0]->tanggal_sewa);
+        $new_date->modify('+' . $lapaks[0]->periode . ' month');
+        $interval1 = $now->diff($new_date);
+
+        if($interval1->invert){
+            dd('-', $interval1->invert, $interval1->m);
+        }else{
+            dd('+', $interval1->invert, $interval1->m);
+        }
+        $data = [
+            'lapaks' => $lapaks
+        ];
+
+        return view('pedagang.lapak', $data);
+    }
+    public function pedagangPembayaran(){
+        
+        return view('pedagang.lapak');
+    }
+    public function pedagangSewa(){
+        return view('pedagang.index');
+    }
+    public function pedagangRetribusi(){
+        return view('pedagang.index');
     }
 }

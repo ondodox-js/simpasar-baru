@@ -1,8 +1,6 @@
 <?php 
     namespace App\Services\Admin;
 
-use Illuminate\Support\Facades\Request;
-
     class Admin {
         static $admin_user;
         static $admin_pass;
@@ -25,13 +23,8 @@ use Illuminate\Support\Facades\Request;
         public static function cekLogin(){
             if(request()->session()->has('admin')){
                 $session_login = request()->session()->get('admin.status')[0];
-                
                 return $session_login;
             }
             return false;
-        }
-
-        public static function logout(){
-            request()->session()->flush();
         }
     }

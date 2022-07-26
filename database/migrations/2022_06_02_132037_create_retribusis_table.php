@@ -16,8 +16,7 @@ class CreateRetribusisTable extends Migration
         Schema::create('retribusis', function (Blueprint $table) {
             $table->id('id_retribusi');
             $table->string('layanan');
-            $table->double('biaya_awal');
-            $table->double('kenaikan_biaya')->default(0);
+            $table->double('biaya');
         });
     }
 

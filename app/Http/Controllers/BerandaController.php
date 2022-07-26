@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Produk;
+
 class BerandaController extends Controller
 {
     public function index(){
@@ -17,6 +19,11 @@ class BerandaController extends Controller
     }
 
     public function barangDagang(){
-        return view('user.barang_dagang');
+        $produks = Produk::all();
+        $data = [
+            'produks' => $produks
+        ];
+
+        return view('user.barang_dagang', $data);
     }
 }

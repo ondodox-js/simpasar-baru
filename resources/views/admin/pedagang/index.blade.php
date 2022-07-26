@@ -29,8 +29,9 @@
                       <td>{{ $pedagang->nama_lengkap }}</td>
                       <td>{{ $pedagang->no_hp }}</td>
                       <td>
-                        <button class="btn btn-success btn-xs"><i class="fa fa-eye"></i></button>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                        <a href="{{ route('admin.pedagang.show', ['id' => $pedagang->id_pedagang]) }}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a>
+                        <a href="{{ route('admin.pedagang.edit', ['id' => $pedagang->id_pedagang]) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                        <button type="submit" onclick="return confirm('Yakin ingin menghapus {{ $pedagang->nama_lengkap }} ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
                       </td>
                     </tr>
                   </form>

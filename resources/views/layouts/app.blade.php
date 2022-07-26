@@ -284,7 +284,7 @@
             </ul>
           </li>
           <li class="sub-menu">
-            <a href="javascript:;" class="{{ request()->is('admin/transaksi/*') || request()->is('admin/transaksi') ? 'active' : '' }} link">
+            <a href="javascript:;" class="{{ request()->is('admin/transaksi-sewa') || request()->is('admin/transaksi-retribusi') ? 'active' : '' }} link">
               <i class="fa fa-money"></i>
               <span>Data transaksi</span>
               </a>
@@ -292,11 +292,11 @@
               <li class="{{ request()->is('admin/transaksi') ? 'active' : '' }}">
                 <a href="{{ route('admin.transaksi.index') }}">Pemesanan</a>
               </li>
-              <li class="{{ request()->is('admin/transaksi/sewa') ? 'active' : '' }}">
-                <a href="{{ route('admin.transaksi.sewa') }}">Pembayaran sewa</a>
+              <li class="{{ request()->is('admin/transaksi-sewa') ? 'active' : '' }}">
+                <a href="{{ route('admin.transaksi-sewa.index') }}">Pembayaran sewa</a>
               </li>
-              <li class="{{ request()->is('admin/transaksi/retribusi') ? 'active' : '' }}">
-                <a href="{{ route('admin.transaksi.retribusi') }}">Pembayaran retribusi</a>
+              <li class="{{ request()->is('admin/transaksi-retribusi') ? 'active' : '' }}">
+                <a href="{{ route('admin.transaksi-retribusi.index') }}">Pembayaran retribusi</a>
               </li>
             </ul>
           </li>

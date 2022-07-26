@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class TransaksiRetribusi extends Model
 {
     protected $table = 'transaksi_retribusi';
-    protected $primaryKey = 'kode_pembayaran';
+    protected $primaryKey = 'id_transaksi';
 
-    protected $fillable = ['kode_pembayaran', 'id_sewa', 'jumlah_bayar'];
+    protected $fillable = ['id_sewa', 'jumlah_bayar'];
 
     const CREATED_AT = 'tanggal_transaksi';
     const UPDATED_AT = null;

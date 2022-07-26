@@ -15,4 +15,16 @@ class Lapak extends Model
     public static function lapakTersedia(){
         return Lapak::where('status', true)->orderBy('posisi')->get();
     }
+
+    public function updateData($data){
+        $this->posisi = $data->posisi;
+        $this->luas = $data->luas;
+        $this->harga_sewa = $data->harga;
+
+        $this->save();
+    }
+
+    public function biayaSewa($periode){
+        return $this->harga_sewa * $periode;
+    }
 }

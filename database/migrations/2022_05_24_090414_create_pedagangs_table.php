@@ -18,7 +18,6 @@ class CreatePedagangsTable extends Migration
             $table->string('nik', 16);
             $table->string('nama_lengkap', 32);
             $table->string('no_hp', 13);
-            $table->string('email', 32);
             $table->string('alamat');
         });
     }

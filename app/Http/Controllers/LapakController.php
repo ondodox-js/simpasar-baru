@@ -13,11 +13,6 @@ class LapakController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function viewlapak()
-    {
-        return view('view-lapak');
-    }
-
     public function index()
     {
         $lapaks = Lapak::all()->sortBy('posisi');
@@ -47,6 +42,14 @@ class LapakController extends Controller
      */
     public function store(Request $request)
     {
+        $request_validate = [
+            'posisi' => 'required',
+            'luas' => 'required|numeric',
+            'harga' => 'required|numeric'
+        ];
+
+        $request->validate($request_validate);
+
         $lapak = new Lapak();
 
         $lapak->posisi = $request->posisi;
@@ -76,7 +79,11 @@ class LapakController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = [
+            'lapak' => Lapak::find($id)
+        ];
+
+        return view('admin.lapak.edit', $data);
     }
 
     /**
@@ -88,7 +95,19 @@ class LapakController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request_validate = [
+            'posisi' => 'required',
+            'luas' => 'required|numeric',
+            'harga' => 'required|numeric'
+        ];
+
+        $crudentials = $request->validate($request_validate);
+
+        $lapak = Lapak::find($id);
+
+        $lapak->updateData((object) $crudentials);
+
+        return redirect()->route('admin.lapak.index');
     }
 
     /**

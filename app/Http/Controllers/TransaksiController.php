@@ -24,23 +24,35 @@ class TransaksiController extends Controller
         return view('admin.transaksi.index', $data);
     }
 
-    public function showPembayaran(Request $request){
+    // public function showPembayaran(Request $request){
+    //     $data_trs = $request->session()->get('data_transaksi');
+
+    //     $pemesanan = new stdClass();
+    //     $pemesanan->pedagang = Pedagang::pedagangObject($data_trs);
+    //     $pemesanan->lapak = Lapak::find($data_trs['idLapak']);
+    //     $pemesanan->periode = $data_trs['periode'];
+
+    //     $transaksi = new CreateSnapTokenService($pemesanan);
+        
+    //     $data = $transaksi->getSnapTokenPenyewaan();
+
+    //     $sewa = Sewa::simpanDataPenyewaan($data->pedagang, $data->lapak, $data->periode);
+
+    //     TransaksiSewa::simpanDataTransaksi($sewa, $data);
+
+    //     return view('admin.transaksi.pembayaran',(array) $data);
+    // }
+
+    public function pembayaranManualDanSimpanAkun(Request $request){
         $data_trs = $request->session()->get('data_transaksi');
 
         $pemesanan = new stdClass();
         $pemesanan->pedagang = Pedagang::pedagangObject($data_trs);
         $pemesanan->lapak = Lapak::find($data_trs['idLapak']);
-        $pemesanan->periode = $data_trs['periode'];
 
-        $transaksi = new CreateSnapTokenService($pemesanan);
-        
-        $data = $transaksi->getSnapTokenPenyewaan();
+        $pemesanan->sewa = Sewa::simpanDataPenyewaan($pemesanan->pedagang, $pemesanan->lapak, $data_trs['periode']);
 
-        $sewa = Sewa::simpanDataPenyewaan($data->pedagang, $data->lapak, $data->periode);
-
-        TransaksiSewa::simpanDataTransaksi($sewa, $data);
-
-        return view('admin.transaksi.pembayaran',(array) $data);
+        return view('admin.transaksi.detail-sewa',(array) $pemesanan);
     }
 
     public function store(Request $request){

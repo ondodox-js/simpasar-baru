@@ -8,17 +8,26 @@
             <div id="message"></div>
             <form class="contact-form php-mail-form" role="form" action="{{ route('admin.lapak.store') }}" method="POST">
                 @csrf
-                <div class="form-group">
-                    <input type="text" name="posisi" class="form-control" id="contact-name" placeholder="Posisi..." data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                <div class="form-group @error('posisi')has-error @enderror">
+                    <input type="text" name="posisi" class="form-control" id="contact-name" placeholder="Posisi..." data-rule="minlen:4" data-msg="Please enter at least 4 chars" value="{{ old('posisi') }}">
                     <div class="validate"></div>
+                    @error('posisi')
+                        <p class="help-block">{{ $errors->first('posisi') }}</p>
+                    @enderror
                 </div>
-                <div class="form-group">
-                    <input type="number" name="luas" class="form-control" id="contact-email" placeholder="- m³" data-rule="number" data-msg="Please enter a valid email">
+                <div class="form-group @error('luas')has-error @enderror">
+                    <input type="number" name="luas" class="form-control" id="contact-email" placeholder="- m³" data-rule="number" data-msg="Please enter a valid email" value="{{ old('luas') }}">
                     <div class="validate"></div>
+                    @error('luas')
+                        <p class="help-block">{{ $errors->first('luas') }}</p>
+                    @enderror
                 </div>
-                <div class="form-group">
-                    <input type="number" name="harga" class="form-control" id="contact-email" placeholder="Rp. - / bulan" data-rule="number" data-msg="Please enter a valid email">
+                <div class="form-group @error('harga')has-error @enderror">
+                    <input type="number" name="harga" class="form-control" id="contact-email" placeholder="Rp. - / bulan" data-rule="number" data-msg="Please enter a valid email" value="{{ old('harga') }}">
                     <div class="validate"></div>
+                    @error('harga')
+                        <p class="help-block">{{ $errors->first('harga') }}</p>
+                    @enderror
                 </div>
 
                 <div class="loading"></div>
