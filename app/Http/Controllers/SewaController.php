@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Lapak;
 use App\Sewa;
+use DateTime;
 use Illuminate\Http\Request;
 
 class SewaController extends Controller
@@ -15,7 +17,11 @@ class SewaController extends Controller
     public function index()
     {
         
-        $sewas = Sewa::dataPenyewa();
+        $sewas = Sewa::dataPenyewa()->map(function($s){
+            $s->getStatus();
+            return $s;
+        });
+
         $data = [
             'sewas' => $sewas
         ];
@@ -86,6 +92,9 @@ class SewaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sewa = Sewa::find($id);
+        $sewa->berhentiSewa();
+
+        return redirect()->route('admin.sewa.index');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class Sewa extends Model
@@ -58,5 +59,24 @@ class Sewa extends Model
         $lapak = Lapak::find($this->id_lapak);
         
         return $lapak->biayaSewa($jumlah_periode);
+    }
+
+    public function berhentiSewa(){
+        $lapak = Lapak::find($this->id_lapak);
+
+        $this->status = false;
+        $lapak->status = true;
+        $lapak->save();
+        $this->save();
+    }
+
+    public function getStatus(){
+            $now = new DateTime();
+            $new_date = new DateTime($this->tanggal_sewa);
+            $new_date->modify('+'. $this->periode . ' month');
+            $interval = $new_date->diff($now);
+
+            $this->interval = $interval->m;
+            $this->aktif = $interval->invert;
     }
 }

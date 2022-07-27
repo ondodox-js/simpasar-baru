@@ -19,9 +19,7 @@
                 </thead>
                 <tbody>
                   @foreach ($sewas as $sewa)
-                  <form action="{{ route('admin.pedagang.destroy', ['id' => $sewa->id_sewa]) }}" method="post">
-                    @csrf
-                    @method('delete')
+                  
                     @php
                         $tanggal_sewa = date('Y-m-d', strtotime($sewa->tanggal_sewa));
 
@@ -29,6 +27,14 @@
                         $akhir_sewa = date('Y-m-d', strtotime($date_time, strtotime($sewa->tanggal_sewa)));
                     @endphp 
                     <tr>
+                      <td>
+                        <form action="{{ route('admin.sewa.destroy', ['id' => $sewa->id_sewa]) }}" method="POST">
+                          @csrf
+                          @method('delete')
+                        <button type="submit" onclick="return confirm('Yakin berhenti menyewa ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
+                      </form>
+
+                      </td>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $sewa->posisi }}</td>
                       <td>{{ $sewa->nama_lengkap }}</td>
@@ -36,14 +42,13 @@
                       <td>{{ $tanggal_sewa }}</td>
                       <td>{{ $akhir_sewa }}</td>
                       <td class="text-center">
-                        @if (!$sewa->status)
-                          <span class="label label-danger pull-right">belum melakukan pembayaran</span>
+                        @if ($sewa->aktif)
+                          <span class="label label-success pull-right">Aktif</span>
                         @else
-                          <span class="label label-success pull-right">disewakan</span>             
+                          <span class="label label-danger pull-right">Silahkan melakukan pemanjangan sewa</span>             
                         @endif
                       </td>
                     </tr>
-                  </form>
                   @endforeach
                 </tbody>
               </table>

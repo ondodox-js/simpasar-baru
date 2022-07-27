@@ -103,6 +103,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function(){
 
     Route::prefix('sewa')->name('sewa.')->group(function(){
         Route::get('/', 'SewaController@index')->name('index');
+        Route::delete('/{id}', 'SewaController@destroy')->name('destroy');
     });
 
     Route::prefix('artikel')->name('artikel.')->group(function(){

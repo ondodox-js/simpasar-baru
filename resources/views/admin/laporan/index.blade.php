@@ -89,7 +89,9 @@
                         </tbody>
                     </table>
                 @else
-                     <h3 class="mt">Transaksi tidak ada!</h3>
+                <div style="margin-top: 10rem; text-align: center">
+                    <h3>Transaksi tidak ada!</h3>
+                </div>
                 @endif
             </div>
         </div>

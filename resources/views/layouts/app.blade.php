@@ -153,7 +153,8 @@
     </section>
     <!--main content end-->
     <!--footer start-->
-    <footer class="site-footer" style="position: fixed; width: 100%; bottom: 0; left: 0; z-index: -1;">
+    {{-- <footer class="site-footer" style="position: fixed; width: 100%; bottom: 0; left: 0; z-index: -1;"> --}}
+    <footer class="site-footer"">
       <div class="text-center">
         <p>
           &copy; Copyrights <strong>Dashio</strong>. All Rights Reserved

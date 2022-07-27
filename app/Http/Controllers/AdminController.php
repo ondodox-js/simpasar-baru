@@ -2,16 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Sewa;
 use App\TransaksiRetribusi;
 use App\TransaksiSewa;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.index');
+        $sewa = Sewa::dataPenyewa()->map(function($s){
+            $s->getStatus();
+            return $s;
+        });
+
+        $transaksi = TransaksiSewa::all()->concat(TransaksiRetribusi::all());
+        
+        $data = [
+            'sewas' => $sewa,
+            'total' =>$transaksi->sum('jumlah_bayar'),
+        ];
+
+        return view('admin.index', $data);
     }
 
     public function laporan(Request $request){
