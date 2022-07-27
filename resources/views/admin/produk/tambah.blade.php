@@ -8,16 +8,25 @@
             <div id="message"></div>
             <form class="contact-form php-mail-form" role="form" action="{{ route('admin.produk.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="form-group">
+                <div class="form-group @error('namaProduk') has-error @enderror">
                     <input type="text" name="namaProduk" class="form-control" id="contact-name" placeholder="Nama produk..." data-rule="minlen:4" data-msg="Please enter at least 4 chars">
                     <div class="validate"></div>
+                @error('namaProduk')
+                    <p class="help-block">{{ $errors->first('namaProduk') }}</p>
+                @enderror
                 </div>
-                <div class="form-group">
+                <div class="form-group @error('hargaProduk') has-error @enderror">
                     <input type="number" name="hargaProduk" class="form-control" id="contact-email" placeholder="Rp. -" data-rule="number" data-msg="Please enter a valid email">
                     <div class="validate"></div>
+                    @error('hargaProduk')
+                        <p class="help-block">{{ $errors->first('hargaProduk') }}</p>
+                    @enderror
                 </div>
-                <div class="form-group">
+                <div class="form-group @error('urlGambar') has-error @enderror">
                     <input name="urlGambar" type="file" class="default">
+                    @error('urlGambar')
+                        <p class="help-block">{{ $errors->first('urlGambar') }}</p>
+                    @enderror
                 </div>
                                   
                 <div class="loading"></div>

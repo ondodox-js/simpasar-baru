@@ -6,7 +6,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6">
             <h4 class="title">Data transaksi</h4>
             <div id="message"></div>
-            <form class="contact-form php-mail-form" role="form" action="{{ route('admin.transaksi-sewa.update', $item) }}" method="POST">
+            <form class="contact-form php-mail-form" role="form" action="{{ route('admin.transaksi-retribusi.update', $item) }}" method="POST">
                 @csrf
                 @method('put')
                 <div class="form-group">

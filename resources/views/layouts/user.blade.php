@@ -43,11 +43,6 @@
 				<li><a href="{{ route('tentang') }}" class="{{ Route::is('tentang') ? 'active' : '' }}">Tentang</a></li>
 				<li><a href="{{ route('denah') }}" class="{{ Route::is('denah') ? 'active' : '' }}">Denah</a></li>
 				<li><a href="{{ route('dagangan') }}" class="{{Route::is('dagangan') ? 'active' : '' }}">Harga Barang Komoditas</a></li>
-				@if (Pedagang::userCek())
-					<li><a href="{{ route('pedagang.index') }}">Dashboard</a></li>
-				@else
-					<li><a href="{{ route('u-pedagang') }}">Masuk</a></li>
-				@endif
 			</ul>
 			<div class="header-right">
 				<a href="#" class="hr-btn"><i class="flaticon-029-telephone-1"></i>Call us now! </a>

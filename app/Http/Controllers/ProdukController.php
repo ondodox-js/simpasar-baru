@@ -42,6 +42,12 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+        $request_validate = [
+            'namaProduk' => 'required',
+            'hargaProduk' => 'required|numeric',
+            'urlGambar' => 'required|image'
+        ];
+        $request->validate($request_validate);
         $gambar = $request->file('urlGambar');
         $produk_baru = new Produk();
         $produk_baru->nama_produk = $request->namaProduk;
@@ -51,8 +57,9 @@ class ProdukController extends Controller
             return redirect()->route('admin.produk.index');
         }
         
-        $nama_file = Storage::disk('local')->put('produk', $gambar);
-        $produk_baru->url_gambar = $nama_file;
+        $nama_file = Storage::disk('local')->put('public/produk', $gambar);
+        
+        $produk_baru->url_gambar = str_replace('public', 'storage', $nama_file);
         $produk_baru->save();
         return redirect()->route('admin.produk.index');
     }

@@ -11,4 +11,9 @@ class Retribusi extends Model
     protected $fillable = ['layanan', 'biaya_awal'];
     public $timestamps = false;
 
+    
+
+    public static function biayaSeluruh(){
+        return Retribusi::all()->sum('biaya');
+    }
 }

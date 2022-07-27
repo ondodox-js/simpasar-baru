@@ -43,30 +43,45 @@ class DummySeed extends Seeder
         ];
         $produks = [
             [
-                'nama_produk' => 'Garam Halus',
+                'nama_produk' => 'Bawang merah',
                 'harga_terbaru' => 13000,
-                'url_gambar' => '000001.jpg'
+                'url_gambar' => 'storage/produk/bawang-merah.jpg'
             ],
             [
-                'nama_produk' => 'Gula merah',
+                'nama_produk' => 'Bawang putih',
                 'harga_terbaru' => 9000,
-                'url_gambar' => '000002.jpg'
+                'url_gambar' => 'storage/produk/bawang-putih.jpg'
             ],
             [
-                'nama_produk' => 'Cabe merah giling',
+                'nama_produk' => 'Beras',
                 'harga_terbaru' => 16000,
-                'url_gambar' => '000003.jpg'
+                'url_gambar' => 'storage/produk/beras.jpg'
             ],
             [
-                'nama_produk' => 'Santan',
+                'nama_produk' => 'Brokoli',
                 'harga_terbaru' => 15000,
-                'url_gambar' => '000004.jpg'
+                'url_gambar' => 'storage/produk/brokoli.jpg'
             ],
             [
-                'nama_produk' => 'Ayam potong',
+                'nama_produk' => 'Cabai',
                 'harga_terbaru' => 28000,
-                'url_gambar' => '000005.jpg'
-            ]
+                'url_gambar' => 'storage/produk/cabai.jpg'
+            ],
+            [
+                'nama_produk' => 'Telur',
+                'harga_terbaru' => 28000,
+                'url_gambar' => 'storage/produk/telur.jpg'
+            ],
+            [
+                'nama_produk' => 'Tepung terigu',
+                'harga_terbaru' => 28000,
+                'url_gambar' => 'storage/produk/tepung-terigu.jpg'
+            ],
+            [
+                'nama_produk' => 'Tomat',
+                'harga_terbaru' => 28000,
+                'url_gambar' => 'storage/produk/tomat.jpg'
+            ],
         ];
         $retribusis = [
             [

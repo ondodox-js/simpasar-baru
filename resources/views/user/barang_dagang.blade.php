@@ -23,7 +23,7 @@
 				@endphp
 				<div class="col-md-3">
 					<div class="service-item">
-						<img src="assets/img/beras.png" alt="abcd" height="175" width="300">
+						<img src="{{ asset($item->url_gambar) }}" alt="abcd" height="175" width="300">
 						<center>
 							<h4>{{ $item->nama_produk }}</h4>
 							<p>Rp {{ $item->harga_terbaru }}</p>

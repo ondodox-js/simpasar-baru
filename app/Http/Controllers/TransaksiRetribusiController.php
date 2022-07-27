@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Lapak;
+use App\Pedagang;
+use App\Retribusi;
+use App\Sewa;
 use App\TransaksiRetribusi;
 use Illuminate\Http\Request;
 
@@ -14,7 +18,11 @@ class TransaksiRetribusiController extends Controller
      */
     public function index()
     {
-        dd('ok');
+        $data = [
+            'items' => TransaksiRetribusi::joinSewaLapak()
+        ];
+
+        return view('admin.transaksi-retribusi.index', $data);
     }
 
     /**
@@ -24,11 +32,37 @@ class TransaksiRetribusiController extends Controller
      */
     public function create()
     {
-        //
+        {
+            request()->session()->remove('data');
+    
+            $data = [
+                'sewas' => Sewa::joinLapak()
+            ];
+            return view('admin.transaksi-retribusi.create', $data);
+        }
     }
 
     public function afterCreate(Request $request){
-        
+        $request_validate = [
+            'idSewa' => 'required|numeric',
+            'jumlahPeriode' => 'required|numeric'
+        ];
+        $request->validate($request_validate);
+
+        $sewa = Sewa::find($request->idSewa);
+        $transaksi = TransaksiRetribusi::transaksiBaru($request);
+
+        $data = [
+            'pedagang' => Pedagang::find($sewa->id_pedagang),
+            'lapak' => Lapak::find($sewa->id_lapak),
+            'sewa' => $sewa,
+            'transaksi' => $transaksi,
+            'retribusis' => Retribusi::all()
+        ];
+
+        $request->session()->push('data', (object) $data['transaksi']);
+
+        return view('admin.transaksi-retribusi.pembayaran', $data);
     }
 
     /**
@@ -39,7 +73,10 @@ class TransaksiRetribusiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $transaksi = $request->session()->get('data')[0];
+        $transaksi->save();
+
+        return redirect()->route('admin.transaksi-retribusi.index');
     }
 
     /**
@@ -61,7 +98,11 @@ class TransaksiRetribusiController extends Controller
      */
     public function edit(TransaksiRetribusi $transaksiRetribusi)
     {
-        //
+        $data = [
+            'item' => $transaksiRetribusi->findData()
+        ];
+
+        return view('admin.transaksi-retribusi.edit', $data);
     }
 
     /**
@@ -73,7 +114,14 @@ class TransaksiRetribusiController extends Controller
      */
     public function update(Request $request, TransaksiRetribusi $transaksiRetribusi)
     {
-        //
+        $request_validate = [
+            'jumlahPeriode' => 'required|numeric'
+        ];
+        $request->validate($request_validate);
+
+        $transaksiRetribusi->updateTransaksi($request);
+
+        return redirect()->route('admin.transaksi-retribusi.index');
     }
 
     /**
@@ -84,6 +132,8 @@ class TransaksiRetribusiController extends Controller
      */
     public function destroy(TransaksiRetribusi $transaksiRetribusi)
     {
-        //
+        $transaksiRetribusi->delete();
+
+        return redirect()->route('admin.transaksi-retribusi.index');
     }
 }

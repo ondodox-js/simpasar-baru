@@ -97,7 +97,11 @@ class TransaksiSewaController extends Controller
      */
     public function edit(TransaksiSewa $transaksiSewa)
     {
-        //
+        $data = [
+            'item' => $transaksiSewa->findData()
+        ];
+
+        return view('admin.transaksi-sewa.edit', $data);
     }
 
     /**
@@ -109,7 +113,15 @@ class TransaksiSewaController extends Controller
      */
     public function update(Request $request, TransaksiSewa $transaksiSewa)
     {
-        //
+        $request_validate = [
+            'jumlahPeriode' => 'required|numeric'
+        ];
+
+        $request->validate($request_validate);
+
+        $transaksiSewa->updateTransaksi($request);
+
+        return redirect()->route('admin.transaksi-sewa.index');
     }
 
     /**
@@ -120,6 +132,7 @@ class TransaksiSewaController extends Controller
      */
     public function destroy(TransaksiSewa $transaksiSewa)
     {
-        //
+        $transaksiSewa->deleteTransaksi();
+        return redirect()->route('admin.transaksi-sewa.index');
     }
 }

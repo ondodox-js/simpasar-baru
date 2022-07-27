@@ -124,6 +124,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function(){
     Route::resource('transaksi-retribusi', 'TransaksiRetribusiController');
     Route::post('transaksi-sewa/after-create', 'TransaksiSewaController@afterCreate')->name('transaksi-sewa.after-create');
     Route::resource('transaksi-sewa', 'TransaksiSewaController');
+    Route::get('pdf-laporan', 'AdminController@exportLaporan')->name('export-laporan');
 });
 
 //new-route-pedagang

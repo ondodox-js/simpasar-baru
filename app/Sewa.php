@@ -49,8 +49,14 @@ class Sewa extends Model
         if($request->keterangan){
             $transaksi->keterangan = $request->keterangan;
         }
-        $transaksi->periode_bayar = $request->jumlahPeriode;
+        $transaksi->jumlah_periode = $request->jumlahPeriode;
 
         return $transaksi;
+    }
+
+    public function getBiayaSewa($jumlah_periode){
+        $lapak = Lapak::find($this->id_lapak);
+        
+        return $lapak->biayaSewa($jumlah_periode);
     }
 }

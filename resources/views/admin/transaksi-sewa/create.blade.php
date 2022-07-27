@@ -16,11 +16,11 @@
                         @endforeach
                     </select>
                     @error('idsewas')
-                            <p class="help-block">{{ $errors->first('idsewas') }}</p>
+                            <p class="help-block">{{ $errors->first('idSewa') }}</p>
                     @enderror
                 </div>
                 <div class="form-group @error('keterangan')has-error @enderror">
-                    <textarea class="form-control" name="keterangan" placeholder="Keterangan..." rows="5" data-rule="required" data-msg="Please write something for us"></textarea>
+                    <textarea class="form-control" name="keterangan" placeholder="Keterangan..." rows="5" data-rule="required" data-msg="Please write something for us">{{ old('keterangan') }}</textarea>
                     @error('keterangan')
                         <p class="help-block">{{ $errors->first('keterangan') }}</p>
                     @enderror
