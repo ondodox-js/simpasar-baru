@@ -1,8 +1,9 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class TransaksiRetribusi extends Model
 {
@@ -60,5 +61,16 @@ class TransaksiRetribusi extends Model
         };
 
         $this->save();
+    }
+
+    public static function getIncomeAYear(){
+        $items = TransaksiRetribusi::select([DB::raw('extract(month from tanggal_transaksi) as month'), DB::raw('sum(jumlah_bayar) as total')])->groupBy('month')->whereYear('tanggal_transaksi', '=', now())->get();
+        
+        $income1 = new stdClass();
+        foreach($items as $item){
+            $month = $item->month;
+            $income1->$month = $item->total;
+        }
+        return $income1;
     }
 }

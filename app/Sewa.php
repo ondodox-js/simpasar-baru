@@ -38,7 +38,7 @@ class Sewa extends Model
     }
 
     public static function joinLapak(){
-        return Sewa::join('lapaks', 'sewas.id_lapak', '=', 'lapaks.id_lapak')->get();
+        return Sewa::join('lapaks', 'sewas.id_lapak', '=', 'lapaks.id_lapak')->where('sewas.status', '=', true)->get();
     }
 
     public function bayarSewa($request){

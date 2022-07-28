@@ -20,10 +20,17 @@ class AdminController extends Controller
         });
 
         $transaksi = TransaksiSewa::all()->concat(TransaksiRetribusi::all());
-        
+        $p_retribusi = TransaksiRetribusi::getIncomeAYear();
+
+        // $p_retribusi->map(function($i){
+        //     $i->month = date('F', mktime(0, 0, 0, $i->month, 10));
+        //     return $i;
+        // });
+
         $data = [
             'sewas' => $sewa,
             'total' =>$transaksi->sum('jumlah_bayar'),
+            'retribusi' => $p_retribusi
         ];
 
         return view('admin.index', $data);
