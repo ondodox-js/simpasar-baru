@@ -62,4 +62,8 @@ class Pedagang extends Model
         $this->save();
     }
 
+    public function deleteData(){
+        
+    }
+
 }

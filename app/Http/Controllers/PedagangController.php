@@ -96,7 +96,11 @@ class PedagangController extends Controller
      */
     public function show($id)
     {
-        dd(Pedagang::find($id));
+        $data = [
+            'pedagang' => Pedagang::find($id)
+        ];
+        
+        return view('admin.pedagang.show', $data);
     }
 
     /**
@@ -147,39 +151,7 @@ class PedagangController extends Controller
     {
         $pedagang = Pedagang::find($id_pedagang);
 
-        $pedagang->delete();
+        $pedagang->deleteData();
         return redirect()->route('admin.pedagang.index');
-    }
-
-    public function pedagangDashboard(){
-        return view('pedagang.index');
-    }
-    public function pedagangLapak(){
-        $lapaks = Sewa::getLapak(Pedagang::user());
-        $now = new DateTime();
-        $new_date = new DateTime($lapaks[0]->tanggal_sewa);
-        $new_date->modify('+' . $lapaks[0]->periode . ' month');
-        $interval1 = $now->diff($new_date);
-
-        if($interval1->invert){
-            dd('-', $interval1->invert, $interval1->m);
-        }else{
-            dd('+', $interval1->invert, $interval1->m);
-        }
-        $data = [
-            'lapaks' => $lapaks
-        ];
-
-        return view('pedagang.lapak', $data);
-    }
-    public function pedagangPembayaran(){
-        
-        return view('pedagang.lapak');
-    }
-    public function pedagangSewa(){
-        return view('pedagang.index');
-    }
-    public function pedagangRetribusi(){
-        return view('pedagang.index');
     }
 }

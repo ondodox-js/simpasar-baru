@@ -20,7 +20,11 @@
   <!-- Custom styles for this template -->
   <link href="{{ asset('dashio/css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('dashio/css/style-responsive.css') }}" rel="stylesheet">
-  
+  <style>
+    .has-error{
+      color: red;
+    }
+  </style>
   <!-- =======================================================
     Template Name: Dashio
     Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
@@ -41,42 +45,23 @@
         <div class="login-wrap @error('namaPengguna') has-error @enderror">
           <input type="text" class="form-control" placeholder="Nama pengguna ..." autofocus required name="namaPengguna">
           @error('namaPengguna')
-            <p class="help-block">{{ $message }}</p>
+            <p class="help-block">{{ $errors->first('namaPengguna') }}</p>
           @enderror
-          <br>
+        </div>
+        <div class="login-wrap @error('kataSandi') has-error @enderror">
           <input type="password" class="form-control" placeholder="Kata sandi ..." required name="kataSandi">
-          @error('namaPengguna')
-            <p class="help-block">Error message</p>
+          @error('kataSandi')
+            <p class="help-block">{{ $errors->first('kataSandi') }}</p>
           @enderror
+        </div>
+        <div class="login-wrap">
           <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
-          <hr>
-          <div class="registration">
-            Don't have an account yet?<br/>
-            <a class="" href="#">
-              Create an account
-              </a>
-          </div>
         </div>
-        <!-- Modal -->
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Forgot Password ?</h4>
-              </div>
-              <div class="modal-body">
-                <p>Enter your e-mail address below to reset your password.</p>
-                <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-              </div>
-              <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                <button class="btn btn-theme" type="button">Submit</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- modal -->
+        @if (Session::has('message'))
+          <div class="login-wrap centered has-error">
+            <p>{{ Session::get('message') }}</p>
+          </div>   
+        @endif
       </form>
     </div>
   </div>

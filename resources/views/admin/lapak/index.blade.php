@@ -15,6 +15,7 @@
                     <th>#</th>
                     <th>Posisi</th>
                     <th>Luas</th>
+                    <th>Harga sewa / bulan</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -27,6 +28,7 @@
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $lapak->posisi }}</td>
                       <td>{{ $lapak->luas }} cm</td>
+                      <td>Rp {{ number_format($lapak->harga_sewa,0,',','.') }}</td>
                       <td>{{ $lapak->status ? 'Tersedia' : 'Disewakan' }}</td>
                       <td>
                         <a href="{{ route('admin.lapak.edit', ['id' => $lapak->id_lapak]) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>

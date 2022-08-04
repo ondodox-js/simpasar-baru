@@ -35,7 +35,9 @@
     License: https://templatemag.com/license/
   ======================================================= -->
   <style>
-    
+    .has-error{
+      color: red;
+    }
   </style>
 </head>
 
@@ -89,9 +91,6 @@
             <ul class="sub">
               <li class="{{ request()->is('admin/pedagang')||request()->is('admin/pedagang/*') ? 'active' : '' }}">
                 <a href="{{ route('admin.pedagang.index') }}">Data pedagang</a>
-              </li>
-              <li class="{{ request()->is('admin/retribusi')||request()->is('admin/retribusi/*') ? 'active' : '' }}">
-                <a href="{{ route('admin.retribusi.index') }}">Data retribusi</a>
               </li>
               <li class="{{ request()->is('admin/sewa') ? 'active' : '' }}">
                 <a href="{{ route('admin.sewa.index') }}">Data sewa</a>

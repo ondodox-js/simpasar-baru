@@ -34,6 +34,12 @@
                     @enderror
                 </div>
 
+                @if (Session::has('message'))
+                    <div class="login-wrap centered has-error">
+                        <p>{{ Session::get('message') }}</p>
+                    </div>   
+                @endif
+
                 <div class="loading"></div>
                 <div class="error-message"></div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>

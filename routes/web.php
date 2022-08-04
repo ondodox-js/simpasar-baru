@@ -92,14 +92,14 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function(){
         Route::delete('/{id}', 'LapakController@destroy')->name('destroy');
     });
 
-    Route::prefix('retribusi')->name('retribusi.')->group(function(){
-        Route::get('/', 'RetribusiController@index')->name('index');
-        Route::get('/tambah', 'RetribusiController@create')->name('tambah');
-        Route::get('/{id}', 'RetribusiController@edit')->name('edit');
-        Route::post('/', 'RetribusiController@store')->name('store');
-        Route::put('/', 'RetribusiController@update')->name('update');
-        Route::delete('/{id}', 'RetribusiController@destroy')->name('destroy');
-    });
+    // Route::prefix('retribusi')->name('retribusi.')->group(function(){
+    //     Route::get('/', 'RetribusiController@index')->name('index');
+    //     Route::get('/tambah', 'RetribusiController@create')->name('tambah');
+    //     Route::get('/{id}', 'RetribusiController@edit')->name('edit');
+    //     Route::post('/', 'RetribusiController@store')->name('store');
+    //     Route::put('/', 'RetribusiController@update')->name('update');
+    //     Route::delete('/{id}', 'RetribusiController@destroy')->name('destroy');
+    // });
 
     Route::prefix('sewa')->name('sewa.')->group(function(){
         Route::get('/', 'SewaController@index')->name('index');

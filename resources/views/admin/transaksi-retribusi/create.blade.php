@@ -33,6 +33,11 @@
                         <p class="help-block">{{ $errors->first('jumlahPeriode') }}</p>
                     @enderror
                 </div>
+                @if (Session::has('message'))
+                    <div class="login-wrap centered has-error">
+                        <p>{{ Session::get('message') }}</p>
+                    </div>   
+                @endif
 
                 <div class="loading"></div>
                 <div class="error-message"></div>

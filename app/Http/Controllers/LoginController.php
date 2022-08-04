@@ -24,7 +24,7 @@ class LoginController extends Controller
 
             return redirect()->intended('admin');
         }
-        return back()->with('loginFailed', 'Upaya untuk masuk gagal!');
+        return back()->with('message', 'Upaya untuk masuk gagal!');
     }
 
     public function viewLoginPedagang(){

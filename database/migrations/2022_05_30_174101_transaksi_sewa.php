@@ -18,7 +18,7 @@ class TransaksiSewa extends Migration
             $table->foreignId('id_sewa')->constrained('sewas', 'id_sewa');
             $table->double('jumlah_bayar');
             $table->double('jumlah_periode');
-            $table->text('keterangan');
+            $table->text('keterangan')->default('Pembayaran sewa');
             $table->timestamp('tanggal_transaksi');
         });
     }

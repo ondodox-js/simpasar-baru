@@ -25,7 +25,7 @@
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $retribusi->layanan }}</td>
-                      <td>{{ number_format($retribusi->biaya,0,',','.') }}</td>
+                      <td>Rp {{ number_format($retribusi->biaya,0,',','.') }}</td>
                       <td>
                         <a href="{{ route('admin.retribusi.edit', ['id' => $retribusi->id_retribusi]) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                         <button type="submit" onclick="return confirm('Yakin ingin menghapus {{ $retribusi->nama_lengkap }} ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>

@@ -46,6 +46,10 @@ class TransaksiSewaController extends Controller
         ];
         $request->validate($request_validate);
 
+        if($request->jumlahPeriode < 1){
+            return back()->with('message', 'Periode harus lebih besar dari 0');
+        }
+
         $sewa = Sewa::find($request->idSewa);
         $transaksi = $sewa->bayarSewa($request);
 
