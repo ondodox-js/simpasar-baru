@@ -29,7 +29,7 @@
                       <td>{{ $item->posisi }}</td>
                       <td>Rp {{ number_format($item->jumlah_bayar,0,',','.') }}</td>
                       <td>{{ $item->keterangan }}</td>
-                      <td>{{ date('d-m-Y H:m:s', strtotime($item->tanggal_transaksi))}}</td>
+                      <td>{{ date('d-m-Y H:i:s', strtotime($item->tanggal_transaksi))}}</td>
                       {{-- <td>{{ $item->tanggal_transaksi}}</td> --}}
                       <td>
                         <a href="{{ route('admin.transaksi-retribusi.edit', $item) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>

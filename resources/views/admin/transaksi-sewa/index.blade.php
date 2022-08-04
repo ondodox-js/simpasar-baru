@@ -29,7 +29,7 @@
                       <td>{{ $item->posisi }}</td>
                       <td>Rp {{ number_format($item->jumlah_bayar,0,',','.') }}</td>
                       <td>{{ $item->keterangan }}</td>
-                      <td>{{ date('d-m-Y H:m:s', strtotime($item->tanggal_transaksi))}}</td>
+                      <td>{{ date('d-m-Y H:i:s', strtotime($item->tanggal_transaksi))}}</td>
                       <td>
                         <a href="{{ route('admin.transaksi-sewa.edit', $item) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                         <button type="submit" onclick="return confirm('Yakin ingin menghapus transaksi ini ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>

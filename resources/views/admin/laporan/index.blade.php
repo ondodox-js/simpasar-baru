@@ -70,7 +70,7 @@
                         @foreach ($transaksis as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ date('d-m-Y h:m:s', strtotime($item->tanggal_transaksi)) }}</td>
+                                <td>{{ date('d-m-Y H:i:s', strtotime($item->tanggal_transaksi)) }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>{{ $item->posisi }}</td>
                                 <td class="text-right">Rp {{ number_format($item->jumlah_bayar,0,',','.') }}</td>
