@@ -34,8 +34,8 @@ class DummySeed extends Seeder
                 'id_retribusi' => 3
             ],
             [
-                'posisi' => 8,
-                'luas' => '5200',
+                'posisi' => 'L004',
+                'luas' => 4,
                 'harga_sewa' => 15000,
                 'id_retribusi' => 1
             ],
@@ -90,15 +90,15 @@ class DummySeed extends Seeder
         ];
         $retribusis = [
             [
-                'kelas' => 'A',
+                'kelas' => 1,
                 'harga_m' => 350
             ],
             [
-                'kelas' => 'B',
+                'kelas' => 2,
                 'harga_m' => 200
             ],
             [
-                'kelas' => 'C',
+                'kelas' => 3,
                 'harga_m' => 150
             ],
         ];
