@@ -27,4 +27,10 @@ class Lapak extends Model
     public function biayaSewa($periode){
         return $this->harga_sewa * $periode;
     }
+
+    public function biayaRetribusi(){
+        $retribusi = Retribusi::find($this->id_retribusi);
+
+        return $retribusi->harga_m * $this->luas * 30;
+    }
 }

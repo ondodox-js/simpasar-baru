@@ -82,8 +82,25 @@ class PedagangController extends Controller
      */
     public function store(Request $request)
     { 
-        $data = $request->session()->get('data')[0];
-        Sewa::simpanDataPenyewaan($data['pedagang'], $data['lapak'], $data['sewa']);
+        // $data = $request->session()->get('data')[0];
+        // Sewa::simpanDataPenyewaan($data['pedagang'], $data['lapak'], $data['sewa']);
+
+        $request_validate = [
+            'nik' => 'required|digits:16|numeric',
+            'namaLengkap' => 'required|min:3',
+            'noHp' => 'required|min:9|numeric',
+            'alamat' => 'required|min:3',
+            'idLapak' => 'required'
+        ];
+
+        $request->validate($request_validate);
+
+        $pedagang = Pedagang::pedagangObject($request);
+        $lapak = Lapak::find($request->idLapak);
+        $sewa = new Sewa();
+        $sewa->id_lapak = $lapak->id_lapak;
+
+        Sewa::simpanDataPenyewaan($pedagang, $lapak, $sewa);
 
         return redirect()->route('admin.pedagang.index');
     }

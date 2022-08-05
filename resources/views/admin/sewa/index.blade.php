@@ -10,6 +10,7 @@
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>Aksi</th>
                     <th>Nomor lapak atau kios</th>
                     <th>Nama pedagang</th>
                     <th>Lama sewa</th>
@@ -27,6 +28,8 @@
                         $akhir_sewa = date('Y-m-d', strtotime($date_time, strtotime($sewa->tanggal_sewa)));
                     @endphp 
                     <tr>
+                      <td>{{ $loop->iteration }}</td>
+
                       <td>
                         <form action="{{ route('admin.sewa.destroy', ['id' => $sewa->id_sewa]) }}" method="POST">
                           @csrf
@@ -35,7 +38,6 @@
                       </form>
 
                       </td>
-                      <td>{{ $loop->iteration }}</td>
                       <td>{{ $sewa->posisi }}</td>
                       <td>{{ $sewa->nama_lengkap }}</td>
                       <td>{{ $sewa->periode }} bulan</td>

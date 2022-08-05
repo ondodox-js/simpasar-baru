@@ -17,28 +17,33 @@ class DummySeed extends Seeder
         $lapaks = [
             [
                 'posisi' => 'L001',
-                'luas' => '3300',
-                'harga_sewa' => 9000
+                'luas' => 6,
+                'harga_sewa' => 9000,
+                'id_retribusi' => 1
             ],
             [
                 'posisi' => 'L002',
-                'luas' => '4300',
-                'harga_sewa' => 11000
+                'luas' => 7,
+                'harga_sewa' => 11000,
+                'id_retribusi' => 2
             ],
             [
                 'posisi' => 'L003',
-                'luas' => '2300',
-                'harga_sewa' => 13000
+                'luas' => 3,
+                'harga_sewa' => 13000,
+                'id_retribusi' => 3
             ],
             [
-                'posisi' => 'L004',
+                'posisi' => 8,
                 'luas' => '5200',
-                'harga_sewa' => 15000
+                'harga_sewa' => 15000,
+                'id_retribusi' => 1
             ],
             [
                 'posisi' => 'L005',
-                'luas' => '6100',
-                'harga_sewa' => 17000
+                'luas' => 4,
+                'harga_sewa' => 17000,
+                'id_retribusi' => 2
             ],
         ];
         $produks = [
@@ -85,17 +90,21 @@ class DummySeed extends Seeder
         ];
         $retribusis = [
             [
-                'layanan' => 'Keamanan',
-                'biaya' => 20000
+                'kelas' => 'A',
+                'harga_m' => 350
             ],
             [
-                'layanan' => 'Kebersihan',
-                'biaya' => 50000
-            ]
+                'kelas' => 'B',
+                'harga_m' => 200
+            ],
+            [
+                'kelas' => 'C',
+                'harga_m' => 150
+            ],
         ];
 
+        Retribusi::insert($retribusis);
         Lapak::insert($lapaks);
         Produk::insert($produks);
-        Retribusi::insert($retribusis);
     }
 }

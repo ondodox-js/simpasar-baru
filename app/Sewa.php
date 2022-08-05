@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sewa extends Model
 {
     protected $primaryKey = 'id_sewa';
-    protected $fillable = ['id_pedagang', 'id_lapak', 'periode', 'harga_awal'];
+    protected $fillable = ['id_pedagang', 'id_lapak', 'harga_awal'];
     const CREATED_AT = 'tanggal_sewa';
     const UPDATED_AT = null;
 
@@ -49,6 +49,8 @@ class Sewa extends Model
         $transaksi->jumlah_bayar = $lapak->biayaSewa($request->jumlahPeriode);
         if($request->keterangan){
             $transaksi->keterangan = $request->keterangan;
+        }else{
+            $transaksi->keterangan = "Pembayaran sewa";
         }
         $transaksi->jumlah_periode = $request->jumlahPeriode;
 

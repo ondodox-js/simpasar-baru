@@ -44,7 +44,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="text-center">{{ $transaksi->periode_bayar }}</td>
+                        <td class="text-center">{{ $transaksi->jumlah_periode }}</td>
                         <td>{{ $transaksi->keterangan }}</td>
                         <td class="text-right">Rp. {{ number_format($lapak->harga_sewa,0,',','.') }}</td>
                         <td class="text-right">Rp. {{ number_format($transaksi->jumlah_bayar,0,',','.') }}</td>
@@ -53,8 +53,6 @@
                         <td colspan="2" rowspan="4">
                         <h4>Terms and Conditions</h4>
                         <p>Thank you for your business. We do expect payment within 21 days, so please process this invoice within that time. There will be a 1.5% interest charge per month on late invoices.</p>
-                        <td class="text-right"><strong>Subtotal</strong></td>
-                        <td class="text-right">$1029.00</td>
                     </tr>
                     <tr>
                         <td class="text-right no-border">

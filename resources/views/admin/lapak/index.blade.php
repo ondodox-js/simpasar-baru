@@ -13,6 +13,7 @@
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>Kelas</th>
                     <th>Posisi</th>
                     <th>Luas</th>
                     <th>Harga sewa / bulan</th>
@@ -26,8 +27,9 @@
                     @method('delete')
                     <tr>
                       <td>{{ $loop->iteration }}</td>
+                      <td>{{ $lapak->kelas }}</td>
                       <td>{{ $lapak->posisi }}</td>
-                      <td>{{ $lapak->luas }} cm</td>
+                      <td>{{ $lapak->luas }} m</td>
                       <td>Rp {{ number_format($lapak->harga_sewa,0,',','.') }}</td>
                       <td>{{ $lapak->status ? 'Tersedia' : 'Disewakan' }}</td>
                       <td>

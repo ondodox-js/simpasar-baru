@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRetribusisTable extends Migration
+class AlterTableLapaks extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateRetribusisTable extends Migration
      */
     public function up()
     {
-        Schema::create('retribusis', function (Blueprint $table) {
-            $table->id('id_retribusi');
-            $table->string('kelas');
-            $table->double('harga_m');
+        Schema::table('lapaks', function(Blueprint $table){
+            $table->foreignId('id_retribusi')->constrained('retribusis', 'id_retribusi');
         });
     }
 
@@ -27,6 +25,8 @@ class CreateRetribusisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('retribusis');
+        Schema::table('lapaks', function(Blueprint $table){
+            $table->dropColumn('id_retribusi');
+        });
     }
 }

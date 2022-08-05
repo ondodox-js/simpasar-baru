@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lapak;
+use App\Retribusi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class LapakController extends Controller
      */
     public function index()
     {
-        $lapaks = Lapak::all()->sortBy('posisi');
+        $lapaks = Retribusi::joinLapak()->sortBy('posisi');
 
         $data = [
             'lapaks' => $lapaks
@@ -31,7 +32,12 @@ class LapakController extends Controller
      */
     public function create()
     {
-        return view('admin.lapak.tambah');
+        $data = [
+            'retribusis' => Retribusi::all()->sortBy('kelas')
+        ];
+
+
+        return view('admin.lapak.tambah', $data);
     }
 
     /**
@@ -45,7 +51,8 @@ class LapakController extends Controller
         $request_validate = [
             'posisi' => 'required',
             'luas' => 'required|numeric',
-            'harga' => 'required|numeric'
+            'harga' => 'required|numeric',
+            'idRetribusi' => 'required|numeric'
         ];
 
         $request->validate($request_validate);
@@ -55,6 +62,7 @@ class LapakController extends Controller
         $lapak->posisi = $request->posisi;
         $lapak->luas = $request->luas;
         $lapak->harga_sewa = $request->harga;
+        $lapak->id_retribusi = $request->idRetribusi;
 
         $lapak->save();
         return redirect()->route('admin.lapak.index');

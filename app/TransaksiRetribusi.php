@@ -33,13 +33,18 @@ class TransaksiRetribusi extends Model
         return $transaksi;
     }
 
-    public static function transaksiBaru($request){
+    public static function transaksiBaru($request, Sewa $sewa){
         $periode = $request->jumlahPeriode;
 
         $transaksi = new TransaksiRetribusi();
-        $transaksi->id_sewa = $request->idSewa;
+        $transaksi->id_sewa = $sewa->id_sewa;
         $transaksi->jumlah_periode = $periode;
-        $transaksi->jumlah_bayar = Retribusi::biayaSeluruh() * $periode;
+        
+        $lapak = Lapak::find($sewa->id_lapak);
+
+
+        $transaksi->jumlah_bayar = $lapak->biayaRetribusi() * $periode;
+
         if($request->keterangan){
             $transaksi->keterangan = $request->keterangan;
         }
@@ -72,5 +77,21 @@ class TransaksiRetribusi extends Model
             $income1->$month = $item->total;
         }
         return $income1;
+    }
+
+    public static function getAllRetribusi(){
+        $keamanan = new stdClass();
+        $keamanan->layanan = "Keamanan";
+        $keamanan->biaya = 50000;
+
+        $kebersihan = new stdClass();
+        $kebersihan->layanan = "Kebersihan";
+        $kebersihan->biaya = 30000;
+
+        $data = [
+            $keamanan,
+            $kebersihan
+        ];
+        return $data;
     }
 }

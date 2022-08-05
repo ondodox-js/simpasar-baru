@@ -17,7 +17,7 @@ class CreateSewasTable extends Migration
             $table->id('id_sewa');
             $table->double('harga_awal');
             $table->double('kenaikan_harga')->default(0);
-            $table->integer('periode');
+            $table->double('periode')->default(0);
             $table->boolean('status')->default(true);
             $table->foreignId('id_pedagang')->constrained('pedagangs', 'id_pedagang');
             $table->foreignId('id_lapak')->constrained('lapaks', 'id_lapak');

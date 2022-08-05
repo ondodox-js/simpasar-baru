@@ -8,6 +8,17 @@
             <div id="message"></div>
             <form class="contact-form php-mail-form" role="form" action="{{ route('admin.lapak.store') }}" method="POST">
                 @csrf
+                <div class="form-group @error('idretribusi')has-error @enderror">
+                    <select class="form-control" name="idRetribusi">
+                        <option selected disabled>Kelas :</option>
+                        @foreach ($retribusis as $retribusi)
+                        <option value="{{ $retribusi->id_retribusi }}">{{ $retribusi->kelas }} - Rp. {{ $retribusi->harga_m }} ³/ hari</option>
+                        @endforeach
+                    </select>
+                    @error('idretribusis')
+                            <p class="help-block">{{ $errors->first('idretribusi') }}</p>
+                    @enderror
+                </div>
                 <div class="form-group @error('posisi')has-error @enderror">
                     <input type="text" name="posisi" class="form-control" id="contact-name" placeholder="Posisi..." data-rule="minlen:4" data-msg="Please enter at least 4 chars" value="{{ old('posisi') }}">
                     <div class="validate"></div>

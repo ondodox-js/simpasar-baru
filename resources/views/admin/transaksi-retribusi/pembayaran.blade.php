@@ -36,30 +36,25 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th style="width:60px" class="text-center">JUMLAH BULAN</th>
+                        <th style="width:60px" class="text-center">JUMLAH HARI</th>
                         <th class="text-left">KETERANGAN</th>
-                        <th style="width:140px" class="text-right">BIAYA RETRIBUSI/BULAN</th>
-                        <th style="width:90px" class="text-right">TOTAL</th>
+                        <th style="width:256px" class="text-right">BIAYA RETRIBUSI/HARI</th>
+                        <th style="width:256px" class="text-right">TOTAL</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($retribusis as $item)
-                    @php
-                        $total = $item->biaya * $transaksi->jumlah_periode;
-                    @endphp
                         <tr>
-                            <td class="text-center">{{ $transaksi->jumlah_periode }}</td>
-                            <td>{{ $item->layanan }}</td>
-                            <td class="text-right">Rp. {{ number_format($item->biaya,0,',','.') }}</td>
-                            <td class="text-right">Rp. {{ number_format($total,0,',','.') }}</td>
+                            <td class="text-center">{{ $transaksi->jumlah_periode * 30 }}</td>
+                            <td>Biaya retribusi lapak posisi {{ $lapak->posisi }}, kelas {{ $retribusi->kelas }}</td>
+                            <td class="text-right">Rp. {{ number_format($retribusi->harga_m,0,',','.') }} x {{ $lapak->luas }} m³</td>
+                            <td class="text-right">Rp. {{ number_format($transaksi->jumlah_bayar,0,',','.') }}</td>
                         </tr>
-                    @endforeach
                     <tr>
                         <td colspan="2" rowspan="4">
                         <h4>Terms and Conditions</h4>
                         <p>Thank you for your business. We do expect payment within 21 days, so please process this invoice within that time. There will be a 1.5% interest charge per month on late invoices.</p>
-                        <td class="text-right"><strong>Subtotal</strong></td>
-                        <td class="text-right">$1029.00</td>
+                        {{-- <td class="text-right"><strong>Subtotal</strong></td> --}}
+                        {{-- <td class="text-right">$1029.00</td> --}}
                     </tr>
                     <tr>
                         <td class="text-right no-border">

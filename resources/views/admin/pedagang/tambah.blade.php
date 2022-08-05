@@ -2,7 +2,7 @@
 
 @section('content')
     <h3><i class="fa fa-angle-right"></i> Penambahan Data Pedagang Baru</h3>
-    <form class="contact-form php-mail-form" role="form" action="{{ route('admin.pedagang.after-create') }}" method="POST">
+    <form class="contact-form php-mail-form" role="form" action="{{ route('admin.pedagang.store') }}" method="POST">
     @csrf
     <div class="row mt">
         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -31,7 +31,7 @@
                     <div class="validate"></div>
                 </div>
                 <div class="form-group @error('alamat')has-error @enderror">
-                    <textarea class="form-control" name="alamat" placeholder="Alamat..." rows="5" data-rule="required" data-msg="Please write something for us"></textarea>
+                    <textarea class="form-control" name="alamat" placeholder="Alamat..." rows="5" data-rule="required" data-msg="Please write something for us">{{ old('alamat') }}</textarea>
                     @error('alamat')
                         <p class="help-block">{{ $errors->first('alamat') }}</p>
                     @enderror
@@ -53,13 +53,6 @@
                 @error('idLapak')
                         <p class="help-block">{{ $errors->first('idLapak') }}</p>
                 @enderror
-            </div>
-            <div class="form-group @error('periode')has-error @enderror">
-                <input type="number" name="periode" class="form-control" placeholder="Jumlah Periode Awal Pembayaran" data-rule="number" data-msg="Please enter a valid email" value="{{ old('periode') }}">
-                @error('periode')
-                        <p class="help-block">{{ $errors->first('periode') }}</p>
-                @enderror
-                <div class="validate"></div>
             </div>
 
             <div class="loading"></div>

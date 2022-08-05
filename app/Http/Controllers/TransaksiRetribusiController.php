@@ -22,6 +22,7 @@ class TransaksiRetribusiController extends Controller
             'items' => TransaksiRetribusi::joinSewaLapak()
         ];
 
+
         return view('admin.transaksi-retribusi.index', $data);
     }
 
@@ -54,14 +55,14 @@ class TransaksiRetribusiController extends Controller
         }
 
         $sewa = Sewa::find($request->idSewa);
-        $transaksi = TransaksiRetribusi::transaksiBaru($request);
+        $transaksi = TransaksiRetribusi::transaksiBaru($request, $sewa);
 
         $data = [
             'pedagang' => Pedagang::find($sewa->id_pedagang),
             'lapak' => Lapak::find($sewa->id_lapak),
             'sewa' => $sewa,
             'transaksi' => $transaksi,
-            'retribusis' => Retribusi::all()
+            'retribusi' => Retribusi::find($sewa->id_lapak)
         ];
 
         $request->session()->push('data', (object) $data['transaksi']);

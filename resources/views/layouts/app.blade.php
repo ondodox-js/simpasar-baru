@@ -123,12 +123,12 @@
               <span>Laporan</span>
               </a>
           </li>
-          <li>
+          {{-- <li>
             <a class="{{ Route::is('admin.artikel.index') ? 'active' : '' }} link" href="{{ route('admin.artikel.index') }}">
               <i class="fa fa-tasks"></i>
               <span>Artikel</span>
               </a>
-          </li>
+          </li> --}}
           {{-- <li>
             <a href="inbox.html">
               <i class="fa fa-envelope"></i>
