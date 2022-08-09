@@ -35,6 +35,70 @@
       </div>
     </div>
     <div class="row mt">
+      @if (count($r_komulatif['sudah']) > 0)
+      <div class="col-md-6">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Penyewa sudah bayar retribusi bulan ini</h4>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nomor lapak atau kios</th>
+                    <th>Nama pedagang</th>
+                    <th>Transaksi terbaru</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($r_komulatif['sudah'] as $item)
+                    <tr>
+                      <td>{{ $loop->iteration }}</td>
+                      <td>{{ $item->joinLapakNonStatic()->posisi }}</td>
+                      <td>{{ $item->joinPedagangNonStatic()->nama_lengkap }}</td>  
+                      <td>{{ date('d-m-Y H:i:s', strtotime($item->transaksi_terbaru)) }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+          </div>
+      </div>
+      @else
+      <div class="col-md-6 text-center">
+        <h3>Penyewa belum ada!</h3>
+      </div>       
+      @endif
+      @if (count($r_komulatif['belum']) > 0)
+      <div class="col-md-6">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Penyewa belum bayar retribusi bulan ini</h4>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nomor lapak atau kios</th>
+                    <th>Nama pedagang</th>
+                    <th>Periode telat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($r_komulatif['belum'] as $item)
+                    <tr>
+                      <td>{{ $loop->iteration }}</td>
+                      <td>{{ $item->joinLapakNonStatic()->posisi }}</td>
+                      <td>{{ $item->joinPedagangNonStatic()->nama_lengkap }}</td>  
+                      <td>{{ $item->interval }} bulan</td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+          </div>
+      </div>
+      @else
+      <div class="col-md-6 text-center">
+        <h3>Alhamdulillah sudah pada bayar!</h3>
+      </div>       
+      @endif
+    </div>
+    <div class="row mt">
       @if (count($sewas) > 0)
       <div class="col-md-12">
         <div class="content-panel">
@@ -52,9 +116,6 @@
                 </thead>
                 <tbody>
                   @foreach ($sewas as $sewa)
-                  <form action="{{ route('admin.pedagang.destroy', ['id' => $sewa->id_sewa]) }}" method="post">
-                    @csrf
-                    @method('delete')
                     @php
                         $tanggal_sewa = date('Y-m-d', strtotime($sewa->tanggal_sewa));
 
@@ -76,7 +137,6 @@
                         @endif
                       </td>
                     </tr>
-                  </form>
                   @endforeach
                 </tbody>
               </table>

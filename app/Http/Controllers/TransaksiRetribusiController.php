@@ -18,8 +18,24 @@ class TransaksiRetribusiController extends Controller
      */
     public function index()
     {
+        $b_retribusi = [
+        ];
+
+        $data_sum = TransaksiRetribusi::sumTotalPeriodeRightJoinSewas();
+        foreach($data_sum as $item){
+
+            $sewa = Sewa::find($item->id_sewa);
+
+            $sewa->transaksi_terbaru = $item->transaksi_terbaru;
+            $sewa->getStatusRetribusi($item->total_periode);
+            if(!$sewa->aktif){
+                array_push($b_retribusi, $sewa);
+            }
+        }
+
         $data = [
-            'items' => TransaksiRetribusi::joinSewaLapak()
+            'items' => TransaksiRetribusi::joinSewaLapak(),
+            'b_retribusi' => $b_retribusi
         ];
 
 

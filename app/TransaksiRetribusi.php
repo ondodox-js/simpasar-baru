@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 
+use function PHPSTORM_META\map;
+
 class TransaksiRetribusi extends Model
 {
     protected $table = 'transaksi_retribusi';
@@ -79,19 +81,10 @@ class TransaksiRetribusi extends Model
         return $income1;
     }
 
-    public static function getAllRetribusi(){
-        $keamanan = new stdClass();
-        $keamanan->layanan = "Keamanan";
-        $keamanan->biaya = 50000;
-
-        $kebersihan = new stdClass();
-        $kebersihan->layanan = "Kebersihan";
-        $kebersihan->biaya = 30000;
-
-        $data = [
-            $keamanan,
-            $kebersihan
-        ];
-        return $data;
+    public static function sumTotalPeriodeRightJoinSewas(){
+        $query = 'SELECT sewas.id_sewa, COALESCE(SUM(jumlah_periode), 0) as total_periode, MAX(tanggal_transaksi) as transaksi_terbaru FROM transaksi_retribusi RIGHT JOIN sewas ON sewas.id_sewa = transaksi_retribusi.id_sewa GROUP BY sewas.id_sewa ORDER BY sewas.id_sewa ASC;';
+        $items = DB::select($query);
+        
+        return collect($items);
     }
 }

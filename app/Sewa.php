@@ -19,6 +19,13 @@ class Sewa extends Model
         ->get(['pedagangs.*', 'lapaks.posisi', 'sewas.*']);
     }
 
+    public function joinLapakNonStatic(){
+        return $this->hasOne(Lapak::class, 'id_lapak', 'id_lapak')->first();
+    }
+    public function joinPedagangNonStatic(){
+        return $this->hasOne(Pedagang::class, 'id_pedagang', 'id_pedagang')->first();
+    }
+
     public static function simpanDataPenyewaan(Pedagang $pedagang,Lapak $lapak, Sewa $sewa){
         $pedagang->save();
         $lapak->status = false;
@@ -78,6 +85,15 @@ class Sewa extends Model
             $new_date->modify('+'. $this->periode . ' month');
             $interval = $new_date->diff($now);
 
+            $this->interval = $interval->m;
+            $this->aktif = $interval->invert;
+    }
+    public function getStatusRetribusi($sum_periode){
+            $now = new DateTime();
+            $new_date = new DateTime($this->tanggal_sewa);
+            $new_date->modify('+'. $sum_periode . ' month');
+            $interval = $new_date->diff($now);
+            
             $this->interval = $interval->m;
             $this->aktif = $interval->invert;
     }

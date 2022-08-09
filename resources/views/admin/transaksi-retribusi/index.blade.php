@@ -1,5 +1,23 @@
 @extends('layouts.app')
 
+@push('css-data_table')
+  <link href="{{ asset('DataTables/datatables.min.css') }}" rel="stylesheet">
+@endpush
+@push('js-data_table')
+<script src="{{ asset('DataTables/datatables.min.js') }}"></script>
+<script>
+  $(document).ready( function () {
+    $('#table-belum-bayar').DataTable();
+    setInterval(() => {
+      $('#date-now').text(new Date().toLocaleString('id'));
+  
+    }, 1000);
+  });
+
+  
+</script>
+@endpush
+    
 @section('content')
 <h3><i class="fa fa-angle-right"></i> Data Transaksi Retribusi</h3>
     <div class="row">
@@ -49,4 +67,36 @@
         </div>
         @endif
     </div>
+    <div class="row mt">
+      @if (count($b_retribusi) > 0)
+      <div class="col-md-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Daftar belum bayar retribusi pada <span id="date-now"></span></h4>
+              <table class="table" id="table-belum-bayar">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nomor lapak atau kios</th>
+                    <th>Nama pedagang</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($b_retribusi as $item)
+                    <tr>
+                      <td>{{ $loop->iteration }}</td>
+                      <td>{{ $item->joinLapakNonStatic()->posisi }}</td>
+                      <td>{{ $item->joinPedagangNonStatic()->nama_lengkap }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+          </div>
+      </div>
+      @else
+      <div class="col-md-12 text-center">
+        <h3>Penyewa belum ada!</h3>
+      </div>       
+      @endif
+    </div>
+    
 @endsection

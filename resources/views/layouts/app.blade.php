@@ -27,6 +27,7 @@
 
   @stack('pay-scripts')
   @stack('date-picker-head')
+  @stack('css-data_table')
 
   <!-- =======================================================
     Template Name: Dashio
@@ -254,6 +255,8 @@
       console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
   </script>
+  
+  @stack('js-data_table')
 </body>
 
 </html>

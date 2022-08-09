@@ -5,32 +5,45 @@ namespace App\Http\Controllers;
 use App\Sewa;
 use App\TransaksiRetribusi;
 use App\TransaksiSewa;
-use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use PDF;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $sewa = Sewa::dataPenyewa()->map(function($s){
+        $sewas = Sewa::dataPenyewa()->map(function($s){
             $s->getStatus();
             return $s;
         });
 
+        $r_komulatif = [
+            'sudah' => [],
+            'belum' => []
+        ];
+
+        $data_sum = TransaksiRetribusi::sumTotalPeriodeRightJoinSewas();
+        foreach($data_sum as $item){
+
+            $sewa = Sewa::find($item->id_sewa);
+
+            $sewa->transaksi_terbaru = $item->transaksi_terbaru;
+            $sewa->getStatusRetribusi($item->total_periode);
+            if($sewa->aktif){
+                array_push($r_komulatif['sudah'], $sewa);
+            }else{
+                array_push($r_komulatif['belum'], $sewa);
+            }
+        }
+
         $transaksi = TransaksiSewa::all()->concat(TransaksiRetribusi::all());
         $p_retribusi = TransaksiRetribusi::getIncomeAYear();
 
-        // $p_retribusi->map(function($i){
-        //     $i->month = date('F', mktime(0, 0, 0, $i->month, 10));
-        //     return $i;
-        // });
-
         $data = [
-            'sewas' => $sewa,
+            'sewas' => $sewas,
             'total' =>$transaksi->sum('jumlah_bayar'),
-            'retribusi' => $p_retribusi
+            'retribusi' => $p_retribusi,
+            'r_komulatif' => $r_komulatif
         ];
 
         return view('admin.index', $data);
