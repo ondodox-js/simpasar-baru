@@ -5,7 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 
-use function PHPSTORM_META\map;
 
 class TransaksiRetribusi extends Model
 {
@@ -36,16 +35,15 @@ class TransaksiRetribusi extends Model
     }
 
     public static function transaksiBaru($request, Sewa $sewa){
-        $periode = $request->jumlahPeriode;
+        $data_sum_periode = TransaksiRetribusi::sumTotalPeriodeRightJoinSewas($sewa->id_sewa);
+        $sewa->getStatusRetribusi($data_sum_periode->total_periode); 
+        $periode = $sewa->interval + 1;
 
         $transaksi = new TransaksiRetribusi();
         $transaksi->id_sewa = $sewa->id_sewa;
         $transaksi->jumlah_periode = $periode;
-        
-        $lapak = Lapak::find($sewa->id_lapak);
 
-
-        $transaksi->jumlah_bayar = $lapak->biayaRetribusi() * $periode;
+        $transaksi->jumlah_bayar = 150000 * $periode;
 
         if($request->keterangan){
             $transaksi->keterangan = $request->keterangan;
@@ -81,10 +79,34 @@ class TransaksiRetribusi extends Model
         return $income1;
     }
 
-    public static function sumTotalPeriodeRightJoinSewas(){
-        $query = 'SELECT sewas.id_sewa, COALESCE(SUM(jumlah_periode), 0) as total_periode, MAX(tanggal_transaksi) as transaksi_terbaru FROM transaksi_retribusi RIGHT JOIN sewas ON sewas.id_sewa = transaksi_retribusi.id_sewa GROUP BY sewas.id_sewa ORDER BY sewas.id_sewa ASC;';
-        $items = DB::select($query);
-        
-        return collect($items);
+    public static function sumTotalPeriodeRightJoinSewas($id_sewa = 0){
+        if($id_sewa == 0){
+            $query = 'SELECT sewas.id_sewa, COALESCE(SUM(jumlah_periode), 0) as total_periode, MAX(tanggal_transaksi) as transaksi_terbaru FROM transaksi_retribusi RIGHT JOIN sewas ON sewas.id_sewa = transaksi_retribusi.id_sewa GROUP BY sewas.id_sewa ORDER BY sewas.id_sewa ASC;';
+            
+            $items = DB::select($query);
+            return collect($items);
+        }else{
+            $query = 'SELECT sewas.id_sewa, COALESCE(SUM(jumlah_periode), 0) as total_periode, MAX(tanggal_transaksi) as transaksi_terbaru FROM transaksi_retribusi RIGHT JOIN sewas ON sewas.id_sewa = transaksi_retribusi.id_sewa WHERE sewas.id_sewa = ' . $id_sewa . ' GROUP BY sewas.id_sewa ORDER BY sewas.id_sewa ASC;';
+            $item = DB::selectOne($query);
+            return $item;
+        }
+    }
+
+    public static function statusBayarRetribusi(bool $status){
+        $data = [
+        ];
+
+        $data_sum = TransaksiRetribusi::sumTotalPeriodeRightJoinSewas();
+        foreach($data_sum as $item){
+
+            $sewa = Sewa::find($item->id_sewa);
+
+            $sewa->transaksi_terbaru = $item->transaksi_terbaru;
+            $sewa->getStatusRetribusi($item->total_periode);
+            if($sewa->aktif == $status){
+                array_push($data, $sewa);
+            }
+        }
+        return $data;
     }
 }

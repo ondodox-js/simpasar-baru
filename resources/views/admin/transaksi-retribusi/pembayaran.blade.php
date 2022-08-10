@@ -7,11 +7,11 @@
             <div class="col-lg-10 col-lg-offset-1">
                 <div class="row">
                     <div class="col-md-9">
-                        <h4>{{ $pedagang->nama_lengkap }}</h4>
+                        <h4>{{ $sewa->joinPedagangNonStatic()->nama_lengkap }}</h4>
                         <address>
                             <strong>Enterprise Corp.</strong><br>
-                            {{ $pedagang->alamat }}<br>
-                            <abbr title="Phone">P:</abbr> {{ $pedagang->no_hp }}
+                            {{ $sewa->joinPedagangNonStatic()->alamat }}<br>
+                            <abbr title="Phone">P:</abbr> {{ $sewa->joinPedagangNonStatic()->no_hp }}
                         </address>
                     </div>
                     <!-- /col-md-9 -->
@@ -36,7 +36,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th style="width:60px" class="text-center">JUMLAH HARI</th>
+                        <th style="width:60px" class="text-center">JUMLAH PERIODE</th>
                         <th class="text-left">KETERANGAN</th>
                         <th style="width:256px" class="text-right">BIAYA RETRIBUSI/HARI</th>
                         <th style="width:256px" class="text-right">TOTAL</th>
@@ -44,10 +44,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="text-center">{{ $transaksi->jumlah_periode * 30 }}</td>
-                            <td>Biaya retribusi lapak posisi {{ $lapak->posisi }}, kelas {{ $retribusi->kelas }}</td>
-                            <td class="text-right">Rp. {{ number_format($retribusi->harga_m,0,',','.') }} x {{ $lapak->luas }} m³</td>
-                            <td class="text-right">Rp. {{ number_format($transaksi->jumlah_bayar,0,',','.') }}</td>
+                            <td class="text-center">{{ $transaksi->jumlah_periode }} bulan</td>
+                            <td>Biaya retribusi lapak posisi {{ $sewa->joinLapakNonStatic()->posisi }} | {{ $transaksi->jumlah_periode }} bulan</td>
+                            <td class="text-right">Rp. {{ number_format(150000,0,',','.') }} x {{ $transaksi->jumlah_periode }} bulan</td>
+                            <td class="text-right">Rp. {{ number_format(150000 * ($transaksi->jumlah_periode),0,',','.') }}</td>
                         </tr>
                     <tr>
                         <td colspan="2" rowspan="4">
@@ -60,7 +60,7 @@
                         <td class="text-right no-border">
                         <div class="well well-small green"><strong>Total</strong></div>
                         </td>
-                        <td class="text-right"><strong>Rp. {{ number_format($transaksi->jumlah_bayar,0,',','.') }}</strong></td>
+                        <td class="text-right"><strong>Rp. {{ number_format(150000 * ($transaksi->jumlah_periode),0,',','.') }}</strong></td>
                         
                     </tr>
                     </tbody>

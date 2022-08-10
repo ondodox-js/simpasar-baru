@@ -18,26 +18,11 @@ class TransaksiRetribusiController extends Controller
      */
     public function index()
     {
-        $b_retribusi = [
-        ];
-
-        $data_sum = TransaksiRetribusi::sumTotalPeriodeRightJoinSewas();
-        foreach($data_sum as $item){
-
-            $sewa = Sewa::find($item->id_sewa);
-
-            $sewa->transaksi_terbaru = $item->transaksi_terbaru;
-            $sewa->getStatusRetribusi($item->total_periode);
-            if(!$sewa->aktif){
-                array_push($b_retribusi, $sewa);
-            }
-        }
 
         $data = [
             'items' => TransaksiRetribusi::joinSewaLapak(),
-            'b_retribusi' => $b_retribusi
+            'b_retribusi' => TransaksiRetribusi::statusBayarRetribusi(false)
         ];
-
 
         return view('admin.transaksi-retribusi.index', $data);
     }
@@ -53,32 +38,25 @@ class TransaksiRetribusiController extends Controller
             request()->session()->remove('data');
     
             $data = [
-                'sewas' => Sewa::joinLapak()
+                'sewas' => TransaksiRetribusi::statusBayarRetribusi(false)
             ];
+
             return view('admin.transaksi-retribusi.create', $data);
         }
     }
 
     public function afterCreate(Request $request){
         $request_validate = [
-            'idSewa' => 'required|numeric',
-            'jumlahPeriode' => 'required|numeric'
+            'idSewa' => 'required|numeric'
         ];
         $request->validate($request_validate);
-
-        if($request->jumlahPeriode < 1){
-            return back()->with('message', 'Periode harus lebih besar dari 0');
-        }
 
         $sewa = Sewa::find($request->idSewa);
         $transaksi = TransaksiRetribusi::transaksiBaru($request, $sewa);
 
         $data = [
-            'pedagang' => Pedagang::find($sewa->id_pedagang),
-            'lapak' => Lapak::find($sewa->id_lapak),
             'sewa' => $sewa,
             'transaksi' => $transaksi,
-            'retribusi' => Retribusi::find($sewa->id_lapak)
         ];
 
         $request->session()->push('data', (object) $data['transaksi']);

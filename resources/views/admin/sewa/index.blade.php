@@ -41,8 +41,8 @@
                       <td>{{ $sewa->posisi }}</td>
                       <td>{{ $sewa->nama_lengkap }}</td>
                       <td>{{ $sewa->periode }} bulan</td>
-                      <td>{{ $tanggal_sewa }}</td>
-                      <td>{{ $akhir_sewa }}</td>
+                      <td>{{ date('d-m-Y', strtotime($tanggal_sewa))}}</td>
+                      <td>{{ date('d-m-Y', strtotime($akhir_sewa))}}</td>
                       <td class="text-center">
                         @if ($sewa->aktif)
                           <span class="label label-success pull-right">Aktif</span>

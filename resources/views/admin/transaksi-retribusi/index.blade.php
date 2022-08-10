@@ -24,7 +24,13 @@
         @if (count($items) > 0)
         <div class="col-md-12">
           <div class="text-right mb">
-            <a href="{{ route('admin.transaksi-retribusi.create') }}" class="btn btn-theme">Transaksi baru</a>
+            <a href="{{ route('admin.transaksi-retribusi.create') }}" class="btn btn-theme @if (count($b_retribusi) < 1) disabled @endif">
+              @if (count($b_retribusi) > 0)
+                  Transaksi baru
+              @else
+                  Tidak ada yang terlambat
+              @endif
+            </a>
           </div>
           <div class="content-panel">
               <table class="table">
@@ -48,7 +54,6 @@
                       <td>Rp {{ number_format($item->jumlah_bayar,0,',','.') }}</td>
                       <td>{{ $item->keterangan }}</td>
                       <td>{{ date('d-m-Y H:i:s', strtotime($item->tanggal_transaksi))}}</td>
-                      {{-- <td>{{ $item->tanggal_transaksi}}</td> --}}
                       <td>
                         <a href="{{ route('admin.transaksi-retribusi.edit', $item) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                         <button type="submit" onclick="return confirm('Yakin ingin menghapus transaksi ini ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>

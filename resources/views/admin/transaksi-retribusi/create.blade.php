@@ -12,7 +12,7 @@
                     <select class="form-control" name="idSewa">
                         <option selected disabled>Sewa :</option>
                         @foreach ($sewas as $sewa)
-                        <option value="{{ $sewa->id_sewa }}">{{ $sewa->posisi }} - {{ $sewa->luas }} m³ - Rp. {{ $sewa->harga_sewa }} / bulan</option>
+                        <option value="{{ $sewa->id_sewa }}">{{ $sewa->joinLapakNonStatic()->posisi }} - {{ $sewa->joinLapakNonStatic()->luas }} m³ - {{ $sewa->interval + 1 }} bulan</option>
                         @endforeach
                     </select>
                     @error('idsewas')
@@ -25,13 +25,6 @@
                         <p class="help-block">{{ $errors->first('keterangan') }}</p>
                     @enderror
                     <div class="validate"></div>
-                </div>
-                <div class="form-group @error('jumlahPeriode')has-error @enderror">
-                    <input type="number" name="jumlahPeriode" class="form-control" id="contact-email" placeholder="Jumlah periode ..." data-rule="number" data-msg="Please enter a valid email" value="{{ old('jumlahPeriode') }}">
-                    <div class="validate"></div>
-                    @error('jumlahPeriode')
-                        <p class="help-block">{{ $errors->first('jumlahPeriode') }}</p>
-                    @enderror
                 </div>
                 @if (Session::has('message'))
                     <div class="login-wrap centered has-error">

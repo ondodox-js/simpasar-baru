@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Lapak;
 use App\Sewa;
-use DateTime;
 use Illuminate\Http\Request;
 
 class SewaController extends Controller
