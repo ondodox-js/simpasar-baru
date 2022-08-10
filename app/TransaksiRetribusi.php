@@ -17,7 +17,7 @@ class TransaksiRetribusi extends Model
     const UPDATED_AT = null;
 
     public static function joinSewaLapak(){
-        return TransaksiRetribusi::join('sewas', 'transaksi_retribusi.id_sewa', '=', 'sewas.id_sewa')->join('lapaks', 'sewas.id_lapak', '=', 'lapaks.id_lapak')->get();
+        return TransaksiRetribusi::join('sewas', 'transaksi_retribusi.id_sewa', '=', 'sewas.id_sewa')->join('lapaks', 'sewas.id_lapak', '=', 'lapaks.id_lapak')->join('pedagangs', 'sewas.id_pedagang', '=', 'pedagangs.id_pedagang')->get();
     }
 
     public function bayarSewa($request){

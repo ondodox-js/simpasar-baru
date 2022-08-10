@@ -37,6 +37,7 @@
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>Nama pedagang</th>
                     <th>Posisi</th>
                     <th>Jumlah bayar</th>
                     <th>Keterangan</th>
@@ -50,6 +51,7 @@
                     @method('delete')
                     <tr>
                       <td>{{ $loop->iteration }}</td>
+                      <td>{{ $item->nama_lengkap }}</td>
                       <td>{{ $item->posisi }}</td>
                       <td>Rp {{ number_format($item->jumlah_bayar,0,',','.') }}</td>
                       <td>{{ $item->keterangan }}</td>
