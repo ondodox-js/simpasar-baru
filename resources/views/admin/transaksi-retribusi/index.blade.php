@@ -101,7 +101,7 @@
       </div>
       @else
       <div class="col-md-12 text-center">
-        <h3>Penyewa belum ada!</h3>
+        <h3>Tidak ada yang belum bayar retribusi!</h3>
       </div>       
       @endif
     </div>
